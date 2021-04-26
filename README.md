@@ -8,3 +8,7 @@
     give 'home' or 'away' their own 'difficulty' value (constant).
 - schedules should include 'buys'
 - season is a fixed number of weeks long.
+
+## HTML
+
+- the parameters for the object constructor should probably be taken from an HTML form
