@@ -6,7 +6,7 @@
 - give each team a 'rank' based on 'last season'
 - games are either 'home' or 'away'
     give 'home' or 'away' their own 'difficulty' value (constant).
-- schedules should include 'buys'
+- schedules should include 'byes'
 - season is a fixed number of weeks long.
 
 ## HTML
