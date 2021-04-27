@@ -3,9 +3,10 @@ const testFunc = () => {
     const testContainer = document.createElement("div");
     testContainer.classList.add("testContainer");
 
-    const logo = document.getElementById("benderSVG");
+    const logoChoice = document.getElementsByName("teamLogo")[0].value;
+    const logo = document.getElementById(logoChoice);
     clonePath(logo);
-    const newLogo = document.getElementById("benderSVG" + cloneCount);
+    const newLogo = document.getElementById(logoChoice + cloneCount);
     newLogo.classList.add("logoChoice");
 
     const logoBack = document.createElement("div");
