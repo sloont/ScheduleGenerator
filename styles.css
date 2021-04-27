@@ -1,5 +1,5 @@
 .svgCollection {
-
+    display: none;
 }
 
 #test {
@@ -7,7 +7,7 @@
 }
 
 .testContainer {
-    margin: auto;
+    margin: 10px auto 10px;
     height: 100px;
     width: 300px;
     border: 2px solid #000;
