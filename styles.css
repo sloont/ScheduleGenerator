@@ -1,7 +1,13 @@
+
+/*hide the source svgs*/
 .svgCollection {
     display: none;
 }
 
+html {
+    background: #24252a
+}
+/*containers for the test displays*/
 #test {
     margin: auto;
 }
@@ -10,7 +16,8 @@
     margin: 10px auto 10px;
     height: 100px;
     width: 300px;
-    border: 2px solid #000;
+    background: #848b8d;
+    border: 2px solid rgba(0,136,169);
     border-radius: 10px;
     position: relative;
 }
@@ -18,14 +25,13 @@
 .logoBack {
     height: 64px;
     width: 64px;
-    border: 2px solid #000;
+    border: 2.25px solid #000;
     border-radius: 50%;
-    background: rgb(104, 101, 101);
+    background: #edf0f1;
     position:absolute;
     left: 5px;
     top: 18px;
-
-    
+ 
 }
 
 .logoChoice {
@@ -44,5 +50,6 @@
     width: 60px;
     height: 60px;
     fill: #1e90ff;
-    stroke: #000;
+    stroke: #24252a;
+    stroke-width: 1.25px;
 }
