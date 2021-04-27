@@ -6,7 +6,8 @@
 }
 
 html {
-    background: #24252a
+    background: #24252a;
+    font-family: "Noto Sans JP", sans-serif;
 }
 /*containers for the test displays*/
 #test {
@@ -96,4 +97,14 @@ html {
 }
 .white svg {
     fill: #fffafa;
+}
+
+.formLabel {
+    font-family: "Noto Sans JP", sans-serif;
+    font-weight: 600;
+    color: #edf0f1;
+    font-size: 1rem;
+    line-height: 110%;
+    letter-spacing: 1.5px;
+    margin-bottom: 10px;
 }
