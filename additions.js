@@ -5,7 +5,8 @@ const testFunc = () => {
 
     const logo = document.getElementById("benderSVG");
     clonePath(logo);
-    logo.classList.add("logoChoice");
+    const newLogo = document.getElementById("benderSVG" + cloneCount);
+    newLogo.classList.add("logoChoice");
 
     const logoBack = document.createElement("div");
     logoBack.classList.add("logoBack");
@@ -14,7 +15,7 @@ const testFunc = () => {
 
     testDiv.appendChild(testContainer);
     
-    testContainer.appendChild(logo);
+    testContainer.appendChild(newLogo);
     testContainer.appendChild(logoBack);
 
 };
