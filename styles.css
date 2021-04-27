@@ -68,7 +68,32 @@ html {
 .testContainer svg {
     width: 60px;
     height: 60px;
-    fill: #1e90ff;
+    
     stroke: #24252a;
     stroke-width: 1.25px;
+}
+
+.blue svg {
+    fill: #1e90ff;
+}
+.red svg {
+    fill: #b22222;
+}
+.green svg {
+    fill: #3cb371;
+}
+.purple svg {
+    fill: #ba55d3;
+}
+.yellow svg {
+    fill: #ffd700;
+}
+.orange svg {
+    fill: #ff7f50;
+}
+.lightblue svg {
+    fill: #87ceeb;
+}
+.white svg {
+    fill: #fffafa;
 }

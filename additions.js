@@ -18,13 +18,17 @@ const testFunc = () => {
     testContainer.appendChild(newLogo);
     testContainer.appendChild(logoBack);
 
-    //adding Team Name now
+    //adding Team Name from HTML form
 
     const teamName = document.createElement("p");
     teamName.classList.add("teamName");
-    teamName.textContent += "The Bender andS";
+    teamName.textContent += document.getElementsByName("teamName")[0].value;
 
     testContainer.appendChild(teamName);
+
+    //teamColor from HTML form
+    const teamColor = document.getElementsByName("teamColor")[0].value;
+    testContainer.classList.add(teamColor.toLowerCase().split(' ').join(''));
 
 };
 
