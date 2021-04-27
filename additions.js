@@ -18,6 +18,14 @@ const testFunc = () => {
     testContainer.appendChild(newLogo);
     testContainer.appendChild(logoBack);
 
+    //adding Team Name now
+
+    const teamName = document.createElement("p");
+    teamName.classList.add("teamName");
+    teamName.textContent += "The Bender andS";
+
+    testContainer.appendChild(teamName);
+
 };
 
 const testBtn = document.getElementById("testBtn");
