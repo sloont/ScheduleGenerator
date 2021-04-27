@@ -31,5 +31,5 @@ const clonePath = (nodeObject) => {
     cloneCount++;
     clonedPath.id = clonedPath.id + cloneCount;
     const parent = nodeObject.parentElement;
-    parent.appendChild(clonedPath)
+    parent.appendChild(clonedPath);
 }
