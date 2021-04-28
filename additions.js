@@ -52,12 +52,6 @@ const testFunc = () => {
 
 };
 
-const testBtn = document.getElementById("testBtn");
-
-testBtn.addEventListener("click", () => {
-    testFunc();
-});
-
 let cloneCount = 0;
 const clonePath = (nodeObject) => {
     const clonedPath = nodeObject.cloneNode(true);
