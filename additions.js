@@ -1,23 +1,33 @@
 let childCount = 0;
 
 const testFunc = () => {
-
+    //create the testContainer div and add the class testContainer
     const testContainer = document.createElement("div");
     testContainer.classList.add("testContainer");
 
+    //grab logoChoice from the html form
     const logoChoice = document.getElementsByName("teamLogo")[0].value;
+
+    //find the logo in the svgCollection and clone it (gains a new ID)
     const logo = document.getElementById(logoChoice);
     clonePath(logo);
+
+    //grab newLogo svg (the one with the new ID) the original stays put
     const newLogo = document.getElementById(logoChoice + cloneCount);
+    //add logoChoice class to the svg
     newLogo.classList.add("logoChoice");
 
+    //create a div for the logo background and add class logoBack
     const logoBack = document.createElement("div");
     logoBack.classList.add("logoBack");
 
+    //grab the test container that exists in the html already
     const testDiv = document.getElementById("test");
 
+    //add testContainer to test
     testDiv.appendChild(testContainer);
     
+    //add newLogo and logoBack to the testContainer
     testContainer.appendChild(newLogo);
     testContainer.appendChild(logoBack);
 
@@ -33,6 +43,7 @@ const testFunc = () => {
     const teamColor = document.getElementsByName("teamColor")[0].value;
     testContainer.classList.add(teamColor.toLowerCase().split(' ').join(''));
 
+    //for now this variable is how we make unique the svg clones
     childCount++;
 
     if (childCount % 2 === 1) {
