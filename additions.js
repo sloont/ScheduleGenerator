@@ -1,3 +1,5 @@
+let childCount = 0;
+
 const testFunc = () => {
 
     const testContainer = document.createElement("div");
@@ -31,6 +33,12 @@ const testFunc = () => {
     const teamColor = document.getElementsByName("teamColor")[0].value;
     testContainer.classList.add(teamColor.toLowerCase().split(' ').join(''));
 
+    childCount++;
+
+    if (childCount % 2 === 1) {
+        insertDot();
+    }
+
 };
 
 const testBtn = document.getElementById("testBtn");
@@ -46,4 +54,15 @@ const clonePath = (nodeObject) => {
     clonedPath.id = clonedPath.id + cloneCount;
     const parent = nodeObject.parentElement;
     parent.appendChild(clonedPath);
+}
+
+
+//new test 
+const insertDot = () => {
+    const dot = document.createElement("div");
+    dot.classList.add("dot");
+    dot.textContent += "VS.";
+
+    const testDiv = document.getElementById("test");
+    testDiv.appendChild(dot);
 }

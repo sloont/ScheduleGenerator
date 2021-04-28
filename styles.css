@@ -10,9 +10,7 @@ html {
     font-family: "Noto Sans JP", sans-serif;
 }
 /*containers for the test displays*/
-#test {
-    margin: auto;
-}
+
 
 .testContainer {
     margin: 10px auto 10px;
@@ -107,4 +105,41 @@ html {
     line-height: 110%;
     letter-spacing: 1.5px;
     margin-bottom: 10px;
+}
+
+/*New stuff to work on a grid container*/
+
+#test {
+    margin: auto; /*this is old and should stay */
+
+    display: grid;
+    grid-template-columns: 3fr .5fr 3fr;
+    grid-template-rows: repeat(4 1fr);
+
+    width: 60vw;
+
+    
+
+
+}
+
+
+.dot {
+    width: 20px;
+    height: 20px;
+    
+    margin: auto;
+    margin-top: 45px;
+
+    background: #24252a;
+
+    font-family: "Noto Sans JP", sans-serif;
+    font-weight: 600;
+    color: #edf0f1;
+    font-size: 1.5rem;
+    line-height: 110%;
+    letter-spacing: 2px;
+    text-align: center;
+    
+    
 }
