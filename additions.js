@@ -47,7 +47,7 @@ const testFunc = () => {
     childCount++;
 
     if (childCount % 2 === 1) {
-        insertDot();
+        insertVersus();
     }
 
 };
@@ -63,11 +63,11 @@ const clonePath = (nodeObject) => {
 
 
 //new test 
-const insertDot = () => {
-    const dot = document.createElement("div");
-    dot.classList.add("dot");
-    dot.textContent += "VS.";
+const insertVersus = () => {
+    const versus = document.createElement("div");
+    versus.classList.add("versus");
+    versus.textContent += "VS.";
 
     const testDiv = document.getElementById("test");
-    testDiv.appendChild(dot);
+    testDiv.appendChild(versus);
 }
