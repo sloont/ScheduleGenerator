@@ -3,23 +3,34 @@
 let numberOfTeams = 0;
 let teamList = [];
 const saveTeamBtn = document.getElementById("saveTeamBtn");
+const scheduleBtn = document.getElementById("scheduleBtn");
 
-const saveTeam = () => {
+const saveTeam = (teamList) => {
 
     const teamName = document.getElementsByName("teamName")[0].value;
     const teamColor = document.getElementsByName("teamColor")[0].value;
     const teamLogo = document.getElementsByName("teamLogo")[0].value;
 
     numberOfTeams++;
-
-    teamList.push(new Team(numberOfTeams, teamName, teamColor, teamLogo));
+    let temp = new Team(numberOfTeams, teamName, teamColor, teamLogo);
+    teamList.push(temp);
+    
+    
 
 }
 
 saveTeamBtn.addEventListener("click", () => {
     
-    saveTeam();
+    saveTeam(teamList);
     testFunc();
     console.log(teamList);
+});
+
+scheduleBtn.addEventListener("click", () => {
+    
+        const scheduler = new Scheduler (teamList);
+        scheduler.createSchedule(1);
+        console.log(scheduler);
+        
 });
 

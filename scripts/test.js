@@ -50,6 +50,6 @@ class Scheduler {
 const makeScheduler = (teams, gameweeks) => {
     const scheduler = new Scheduler (teams);
     scheduler.createSchedule(gameweeks);
-    return scheduler;
+    
 }
 
