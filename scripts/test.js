@@ -13,6 +13,10 @@ class Scheduler {
         this.teamsWithGames = [];
         this.teamsNeedGames = [];
         this.schedule = [];
+
+        for (let x = 0; x < this.teams.length; x++) {
+            this.teamsNeedGames.push(this.teams[x]);
+        }
     }
 
     /**
@@ -20,7 +24,7 @@ class Scheduler {
      * @param {Number} gameweeks The number of the gameweek (or the index into the internal schedule array)
      */
     createSchedule = (gameweeks) => {
-        this.teamsNeedGames = this.teams;
+        
         const schedule = new Schedule(this.teams, gameweeks);
 
         for (let i = 0; i < gameweeks; i++) {
@@ -35,6 +39,8 @@ class Scheduler {
                 this.teamsWithGames.push(this.teamsNeedGames[1]);
 
                 this.teamsNeedGames.splice(0,1);
+                console.log(this.teams.length);
+                console.log(this.teamsNeedGames.length);
                 this.teamsNeedGames.splice(0,1);
                
             }
@@ -47,9 +53,4 @@ class Scheduler {
     }
 }
 
-const makeScheduler = (teams, gameweeks) => {
-    const scheduler = new Scheduler (teams);
-    scheduler.createSchedule(gameweeks);
-    
-}
 
