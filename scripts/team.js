@@ -13,6 +13,8 @@ class Team {
       this.teamName = teamName;
       this.teamColor = teamColor;
       this.teamLogo = teamLogo;
+
+  
     }
   
   }

@@ -18,8 +18,9 @@ const saveTeam = () => {
 }
 
 saveTeamBtn.addEventListener("click", () => {
-    testFunc();
+    
     saveTeam();
+    testFunc();
     console.log(teamList);
 });
 
