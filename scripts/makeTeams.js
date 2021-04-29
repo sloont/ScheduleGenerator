@@ -14,7 +14,6 @@ const saveTeam = () => {
 
     teamList.push(new Team(numberOfTeams, teamName, teamColor, teamLogo));
 
-
 }
 
 saveTeamBtn.addEventListener("click", () => {
