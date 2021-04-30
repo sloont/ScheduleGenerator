@@ -22,15 +22,18 @@ const saveTeam = (teamList) => {
 saveTeamBtn.addEventListener("click", () => {
     
     saveTeam(teamList);
-    testFunc();
+    //testFunc();
     console.log(teamList);
 });
 
 scheduleBtn.addEventListener("click", () => {
     
         const generator = new Generator (teamList);
-        generator.createSchedule(1);
+        generator.createSchedule(2);
         console.log(generator);
+        console.log(generator.schedule["schedule"].length);
+        
+        generator.displaySchedule();
         
 });
 
