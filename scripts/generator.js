@@ -14,6 +14,10 @@ class Generator {
         this.teamsNeedGames = [];
         this.schedule = [];
 
+        this.gameweekTransition();
+    }
+
+    gameweekTransition = () => {
         for (let x = 0; x < this.teams.length; x++) {
             this.teamsNeedGames.push(this.teams[x]);
         }
@@ -44,6 +48,9 @@ class Generator {
                 this.teamsNeedGames.splice(0,1);
                
             }
+
+            this.teamsWithGames = [];
+            this.gameweekTransition();
         }
 
 
