@@ -154,4 +154,12 @@ html {
 
 .gameweek {
     grid-column: 1 / 4;
+
+    font-family: "Noto Sans JP", sans-serif;
+    font-weight: 600;
+    color: #edf0f1;
+    font-size: 1rem;
+    line-height: 110%;
+    letter-spacing: 2px;
+    text-align: center;
 }
