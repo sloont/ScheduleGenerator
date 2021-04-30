@@ -1,6 +1,6 @@
-//Class to represent the scheduler
+//Class to represent the generator
 
-class Scheduler {
+class Generator {
 
     /**
     *  Constructor

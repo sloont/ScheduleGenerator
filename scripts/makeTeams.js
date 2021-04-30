@@ -28,9 +28,9 @@ saveTeamBtn.addEventListener("click", () => {
 
 scheduleBtn.addEventListener("click", () => {
     
-        const scheduler = new Scheduler (teamList);
+        const generator = new Generator (teamList);
         scheduler.createSchedule(1);
-        console.log(scheduler);
+        console.log(generator);
         
 });
 
