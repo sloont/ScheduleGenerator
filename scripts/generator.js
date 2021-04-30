@@ -13,6 +13,7 @@ class Generator {
         this.teamsWithGames = [];
         this.teamsNeedGames = [];
         this.schedule = [];
+        this.playedCombinations = [[1,2],[3,4],[5,6],[7,8]];
 
         this.gameweekTransition();
     }
@@ -23,39 +24,75 @@ class Generator {
         }
     }
 
+    checkIfPlayed = (home, away) => {
+        for (let i = 0; i < this.playedCombinations.length; i++) {
+            if (this.playedCombinations[i][0] === home.teamNumber && this.playedCombinations[i][1] === away.teamNumber) {
+                return true;
+            }
+        }
+    }
+
     /**
      * 
      * @param {Number} gameweeks The number of the gameweek (or the index into the internal schedule array)
      */
     createSchedule = (gameweeks) => {
-        
         this.schedule = new Schedule(this.teams, gameweeks);
-
+    
         for (let i = 0; i < gameweeks; i++) {
-            
+            let counter = 1;
             while (this.teamsNeedGames.length > 0) {
+                
+                let home = this.teamsNeedGames[0];
+                if (counter >= this.teamsNeedGames.length) {
+                    counter = 1;
+                }
+                let away = this.teamsNeedGames[counter];
 
-                let team = this.teamsNeedGames[0];
+                if(!this.checkIfPlayed(home, away)) {
+                    console.log("haven't played");
+                    this.schedule.addGameToGameweek({H: home, A: away}, i);
+                    this.playedCombinations.push([home.teamNumber, away.teamNumber]);
+                    
+                    this.teamsWithGames.push(home);
+                    this.teamsWithGames.push(away);
 
-                this.schedule.addGameToGameweek({H: team, A: this.teamsNeedGames[1]}, i);
+                    this.teamsNeedGames.splice(0,1);
+                    console.log(this.teams.length);
+                    console.log(this.teamsNeedGames.length);
+                    this.teamsNeedGames.splice(counter - 1 ,1);
 
-                this.teamsWithGames.push(team);
-                this.teamsWithGames.push(this.teamsNeedGames[1]);
-
-                this.teamsNeedGames.splice(0,1);
-                console.log(this.teams.length);
-                console.log(this.teamsNeedGames.length);
-                this.teamsNeedGames.splice(0,1);
-               
+                    
+                
+                } else {
+                    counter++;
+                    console.log("counterIncrement");
+                }
+    
+                    /*this.schedule.addGameToGameweek({H: home, A: away}, i);
+    
+                    this.teamsWithGames.push(home);
+                    this.teamsWithGames.push(away);
+    
+                    this.teamsNeedGames.splice(0,1);
+                    console.log(this.teams.length);
+                    console.log(this.teamsNeedGames.length);
+                    this.teamsNeedGames.splice(counter - 1 ,1);
+    
+                    this.playedCombinations.push([home.teamNumber, away.teamNumber]);
+    
+                } else {
+                    counter++;
+                    console.log("counterIncrement");
+                }
+    
+                playedBool = false;*/
             }
-
+    
             this.teamsWithGames = [];
             this.gameweekTransition();
         }
-
-
-
-
+    
         console.log(this.schedule);
     }
 
@@ -95,6 +132,14 @@ class Generator {
             }
         }
     }
+}
+
+const countChildren  = () => {
+    childCount++;
+
+    if (childCount % 2 === 1) {
+        insertVersus();
+    };
 }
 
 const postTeam = (teamObject) => {
@@ -139,10 +184,5 @@ const postTeam = (teamObject) => {
     testContainer.appendChild(logoBack);
 }
 
-const countChildren  = () => {
-    childCount++;
 
-    if (childCount % 2 === 1) {
-        insertVersus();
-    };
-}
+

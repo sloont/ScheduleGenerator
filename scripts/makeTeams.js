@@ -47,7 +47,6 @@ const insertVersus = () => {
 saveTeamBtn.addEventListener("click", () => {
     
     saveTeam(teamList);
-    //testFunc();
     console.log(teamList);
 });
 
