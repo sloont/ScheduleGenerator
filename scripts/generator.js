@@ -13,7 +13,7 @@ class Generator {
         this.teamsWithGames = [];
         this.teamsNeedGames = [];
         this.schedule = [];
-        this.playedCombinations = [[1,2],[3,4],[5,6],[7,8]];
+        this.playedCombinations = [];
 
         this.gameweekTransition();
     }
@@ -25,11 +25,13 @@ class Generator {
     }
 
     checkIfPlayed = (home, away) => {
+       
         for (let i = 0; i < this.playedCombinations.length; i++) {
             if (this.playedCombinations[i][0] === home.teamNumber && this.playedCombinations[i][1] === away.teamNumber) {
                 return true;
             }
         }
+    
     }
 
     /**
@@ -40,16 +42,17 @@ class Generator {
         this.schedule = new Schedule(this.teams, gameweeks);
     
         for (let i = 0; i < gameweeks; i++) {
-            let counter = 1;
+            let counter = this.teamsNeedGames.length - 1;
             while (this.teamsNeedGames.length > 0) {
                 
                 let home = this.teamsNeedGames[0];
                 if (counter >= this.teamsNeedGames.length) {
-                    counter = 1;
+                    counter = this.teamsNeedGames.length - 1;
+                    console.log("counter reset");
                 }
                 let away = this.teamsNeedGames[counter];
 
-                if(!this.checkIfPlayed(home, away)) {
+                if(home != away && !this.checkIfPlayed(home, away)) {
                     console.log("haven't played");
                     this.schedule.addGameToGameweek({H: home, A: away}, i);
                     this.playedCombinations.push([home.teamNumber, away.teamNumber]);
@@ -65,28 +68,10 @@ class Generator {
                     
                 
                 } else {
-                    counter++;
-                    console.log("counterIncrement");
+                    counter--;
+                    console.log("counterDecrement");
                 }
     
-                    /*this.schedule.addGameToGameweek({H: home, A: away}, i);
-    
-                    this.teamsWithGames.push(home);
-                    this.teamsWithGames.push(away);
-    
-                    this.teamsNeedGames.splice(0,1);
-                    console.log(this.teams.length);
-                    console.log(this.teamsNeedGames.length);
-                    this.teamsNeedGames.splice(counter - 1 ,1);
-    
-                    this.playedCombinations.push([home.teamNumber, away.teamNumber]);
-    
-                } else {
-                    counter++;
-                    console.log("counterIncrement");
-                }
-    
-                playedBool = false;*/
             }
     
             this.teamsWithGames = [];
