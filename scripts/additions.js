@@ -5,6 +5,10 @@ const testFunc = () => {
     const testContainer = document.createElement("div");
     testContainer.classList.add("testContainer");
 
+    //create the flexContainer div and add the class flexContainer
+    const flexContainer = document.createElement("div");
+    flexContainer.classList.add("flexContainer");
+
     //grab logoChoice from the html form
     const logoChoice = document.getElementsByName("teamLogo")[0].value;
 
@@ -21,12 +25,15 @@ const testFunc = () => {
     const logoBack = document.createElement("div");
     logoBack.classList.add("logoBack");
 
-    //grab the test container that exists in the html already
-    const testDiv = document.getElementById("test");
+    //grab the grid container that exists in the html already
+    const gridWrapper = document.getElementById("gridWrapper");
 
-    //add testContainer to test
-    testDiv.appendChild(testContainer);
-    
+    //add flexContainer to gridWrapper
+    gridWrapper.appendChild(flexContainer);
+
+    //add testContainer to flexContainer
+    flexContainer.appendChild(testContainer);
+
     //add newLogo and logoBack to the testContainer
     testContainer.appendChild(newLogo);
     testContainer.appendChild(logoBack);
@@ -64,10 +71,14 @@ const clonePath = (nodeObject) => {
 
 //new test 
 const insertVersus = () => {
+    const flexContainer = document.createElement("div");
+    flexContainer.classList.add("flexContainer");
+
     const versus = document.createElement("div");
     versus.classList.add("versus");
     versus.textContent += "VS.";
 
-    const testDiv = document.getElementById("test");
-    testDiv.appendChild(versus);
+    const gridWrapper = document.getElementById("gridWrapper");
+    gridWrapper.appendChild(flexContainer);
+    flexContainer.appendChild(versus);
 }

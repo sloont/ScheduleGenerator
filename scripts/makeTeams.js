@@ -29,7 +29,7 @@ saveTeamBtn.addEventListener("click", () => {
 scheduleBtn.addEventListener("click", () => {
     
         const generator = new Generator (teamList);
-        scheduler.createSchedule(1);
+        generator.createSchedule(1);
         console.log(generator);
         
 });

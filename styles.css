@@ -12,6 +12,15 @@ html {
 /*containers for the test displays*/
 
 
+#gridWrapper {
+    margin: auto; /*this is old and should stay */
+
+    display: grid;
+    grid-template-columns: 6fr 1fr 6fr;
+    grid-template-rows: repeat(4 1fr);
+
+    width: 50vw;
+}
 .testContainer {
     margin: 10px auto 10px;
     height: 100px;
@@ -22,10 +31,18 @@ html {
     border-radius: 10px;
     position: relative;
 
-    display: flex;
-    justify-content: space-between;
-    flex: 0 1 400px;
+    
+    flex: 0 1 300px;
 }
+
+
+.flexContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
 
 .teamName {
     font-family: "Noto Sans JP", sans-serif;
@@ -41,7 +58,8 @@ html {
     margin: auto;
     margin-top: 36.8px;
     
-    width: 320px;
+    width: 70%;
+    
     
 }
 
@@ -112,29 +130,15 @@ html {
     margin-bottom: 10px;
 }
 
-/*New stuff to work on a grid container*/
-
-#test {
-    margin: auto; /*this is old and should stay */
-
-    display: grid;
-    grid-template-columns: 3fr .5fr 3fr;
-    grid-template-rows: repeat(4 1fr);
-
-    width: 60vw;
-
-    
-
-
-}
-
 
 .versus {
-    width: 20px;
-    height: 20px;
+    width: 40px;
+    height: 40px;
     
     margin: auto;
-    margin-top: 45px;
+    margin-top: 37px;
+
+    padding: 10px;
 
     background: #24252a;
 
