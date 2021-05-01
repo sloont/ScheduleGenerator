@@ -1,173 +1,59 @@
-//Class to represent the generator
+// Class to represent the generator
 
 class Generator {
-
-    /**
-    *  Constructor
-    * @param {Array} teams An array of Team objects that participate in the schedule
-    */
     constructor(teams) {
         this.teams = teams;
 
         this.constraints = [];
-        this.teamsWithGames = [];
-        this.teamsNeedGames = [];
-        this.schedule = [];
-        this.playedCombinations = [];
 
-        this.gameweekTransition();
+        this.teamsToPlayMap = new Map();
+        this.teams.forEach(team => {
+            this.refreshTeamsToPlay(team);
+        });
     }
 
-    gameweekTransition = () => {
-        for (let x = 0; x < this.teams.length; x++) {
-            this.teamsNeedGames.push(this.teams[x]);
-        }
-    }
-
-    checkIfPlayed = (home, away) => {
-       
-        for (let i = 0; i < this.playedCombinations.length; i++) {
-            if (this.playedCombinations[i][0] === home.teamNumber && this.playedCombinations[i][1] === away.teamNumber) {
-                return true;
+    refreshTeamsToPlay = team => {
+        let teamsToPlay = new Set();
+        this.teams.forEach(team2 => {
+            if (team.teamNumber !== team2.teamNumber) {
+                teamsToPlay.add(team2.teamNumber);
             }
-        }
-    
-    }
-
-    /**
-     * 
-     * @param {Number} gameweeks The number of the gameweek (or the index into the internal schedule array)
-     */
-    createSchedule = (gameweeks) => {
-        this.schedule = new Schedule(this.teams, gameweeks);
-    
-        for (let i = 0; i < gameweeks; i++) {
-            let counter = this.teamsNeedGames.length - 1;
-            while (this.teamsNeedGames.length > 0) {
-                
-                let home = this.teamsNeedGames[0];
-                if (counter >= this.teamsNeedGames.length) {
-                    counter = this.teamsNeedGames.length - 1;
-                    console.log("counter reset");
-                }
-                let away = this.teamsNeedGames[counter];
-
-                if(home != away && !this.checkIfPlayed(home, away)) {
-                    console.log("haven't played");
-                    this.schedule.addGameToGameweek({H: home, A: away}, i);
-                    this.playedCombinations.push([home.teamNumber, away.teamNumber]);
-                    
-                    this.teamsWithGames.push(home);
-                    this.teamsWithGames.push(away);
-
-                    this.teamsNeedGames.splice(0,1);
-                    console.log(this.teams.length);
-                    console.log(this.teamsNeedGames.length);
-                    this.teamsNeedGames.splice(counter - 1 ,1);
-
-                    
-                
-                } else {
-                    counter--;
-                    console.log("counterDecrement");
-                }
-    
-            }
-    
-            this.teamsWithGames = [];
-            this.gameweekTransition();
-        }
-    
-        console.log(this.schedule);
-    }
-
-    displaySchedule = () => {
-
-        //grab the gridWrapper
-        const gridWrapper = document.getElementById("gridWrapper");
-        const scheduleArray = this.schedule["schedule"]
-        for (let i = 0; i < scheduleArray.length; i++) {
-            //create a flex container for the gameweek
-            const gameweekHeader = document.createElement("h2");
-            gameweekHeader.textContent += "Gameweek" + " " + (i + 1);
-            gameweekHeader.classList.add("gameweek");
-            gameweekHeader.classList.add("flexContainer");
-    
-            //add this container to the DOM
-            gridWrapper.appendChild(gameweekHeader);
-    
-            const gameweekArray = scheduleArray[i];
-            console.log("outer");
-
-            for (let j = 0; j < scheduleArray[i].length; j++) {
-                const home = gameweekArray[j]["H"];
-                const away = gameweekArray[j]["A"];
-                //grab the team objects for home and away within the object for a game
-                postTeam(home);
-
-                //track number of children added to the DOM
-                countChildren();
-
-                postTeam(away);
-                
-                countChildren();
-                
-                
-                console.log("inner");
-            }
-        }
-    }
-}
-
-const countChildren  = () => {
-    childCount++;
-
-    if (childCount % 2 === 1) {
-        insertVersus();
+        });
+        this.teamsToPlayMap.set(team.teamNumber, teamsToPlay);
     };
+
+    createSchedule = (gameweeks) => {
+        let schedule = new Schedule(this.teams, gameweeks);
+
+        for (let gameweek = 0; gameweek < gameweeks; gameweek++) {
+            this.teams.forEach(team1 => {
+                if (!schedule.teamHasGameInGameweek(team1, gameweek)) {
+                    for (let t2 = 0; t2 < this.teams.length; t2++) {
+                        const team2 = this.teams[t2];
+
+                        if (this.teamsToPlayMap.get(team1.teamNumber).has(team2.teamNumber)
+                            && !schedule.teamHasGameInGameweek(team2, gameweek)) {
+
+                            const game = { home: team1, away: team2 };
+                            schedule.addGameToGameweek(game, gameweek);
+
+                            this.teamsToPlayMap.get(team1.teamNumber).delete(team2.teamNumber);
+                            if (this.teamsToPlayMap.get(team1.teamNumber).size === 0) {
+                                this.refreshTeamsToPlay(team1);
+                            }
+
+                            this.teamsToPlayMap.get(team2.teamNumber).delete(team1.teamNumber);
+                            if (this.teamsToPlayMap.get(team2.teamNumber).size === 0) {
+                                this.refreshTeamsToPlay(team2);
+                            }
+
+                            break;
+                        }
+                    }
+                }
+            });
+        };
+
+        return schedule;
+    }
 }
-
-const postTeam = (teamObject) => {
-    const gridWrapper = document.getElementById("gridWrapper");
-    //make additions to the DOM for the home team
-    //create the flexContainer div and add the class flexContainer
-    const flexContainer = document.createElement("div");
-    flexContainer.classList.add("flexContainer");
-    gridWrapper.appendChild(flexContainer);
-
-    //create the testContainer div and add the class testContainer
-    const testContainer = document.createElement("div");
-    testContainer.classList.add("testContainer");
-    flexContainer.appendChild(testContainer);
-
-
-    //get team name
-    const teamName = document.createElement("p");
-    teamName.classList.add("teamName");
-    teamName.textContent += teamObject["teamName"];
-
-    //add team name to DOM
-    testContainer.appendChild(teamName);
-
-    //get team color and apply class to testContainer
-    const teamColor = teamObject["teamColor"];
-    testContainer.classList.add(teamColor);
-
-    //get team logo
-    const teamLogo = teamObject["teamLogo"];
-    const logo = document.getElementById(teamLogo);
-    clonePath(logo);
-    const newLogo = document.getElementById(teamLogo + cloneCount);
-    newLogo.classList.add("logoChoice");
-
-    //make logo background
-    const logoBack = document.createElement("div");
-    logoBack.classList.add("logoBack");
-
-    //add these to the dom
-    testContainer.appendChild(newLogo);
-    testContainer.appendChild(logoBack);
-}
-
-
-
