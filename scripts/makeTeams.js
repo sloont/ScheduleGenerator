@@ -121,7 +121,7 @@ saveTeamBtn.addEventListener("click", () => {
 const scheduleBtn = document.getElementById("scheduleBtn");
 scheduleBtn.addEventListener("click", () => {
     const generator = new Generator(teamList);
-    const schedule = generator.createSchedule(14);
+    const schedule = generator.createSchedule(17);
 
     schedule.printSchedule();
 

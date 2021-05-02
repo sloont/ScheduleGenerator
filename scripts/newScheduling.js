@@ -37,12 +37,19 @@ class Generator {
                                 const game = {home: team1, away: team2};
                                 schedule.addGameToGameweek(game, gameweek);
 
-                                this. teamsToPlayAtHomeMap.get(team1.teamNumber).delete(team2.teamNumber);
+                                this.teamsToPlayAtHomeMap.get(team1.teamNumber).delete(team2.teamNumber);
                                 break;
                             }
                     }
                 }
             });
+
+            if (gameweek > 0 && (gameweek + 1) % ((this.teams.length -1) * 2) === 0) {
+                this.teams.forEach(team => {
+                    this.refreshTeamsToPlay(team);
+                });
+                console.log("did it work?");
+            };
         };
 
         return schedule;
