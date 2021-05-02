@@ -74,7 +74,7 @@ const postTeam = (teamObject) => {
     testContainer.appendChild(logoBack);
 }
 
-displaySchedule = (schedule) => {
+const displaySchedule = (schedule) => {
     // grab the gridWrapper
     const gridWrapper = document.getElementById("gridWrapper");
 
@@ -121,9 +121,11 @@ saveTeamBtn.addEventListener("click", () => {
 const scheduleBtn = document.getElementById("scheduleBtn");
 scheduleBtn.addEventListener("click", () => {
     const generator = new Generator(teamList);
-    const schedule = generator.createSchedule(4);
+    const schedule = generator.createSchedule(14);
 
     schedule.printSchedule();
 
     displaySchedule(schedule);
+    console.log(schedule);
+    console.log(generator);
 });

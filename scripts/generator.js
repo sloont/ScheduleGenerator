@@ -42,7 +42,7 @@ class Generator {
                                 this.refreshTeamsToPlay(team1);
                             }
 
-                            this.teamsToPlayMap.get(team2.teamNumber).delete(team1.teamNumber);
+                            //this.teamsToPlayMap.get(team2.teamNumber).delete(team1.teamNumber);
                             if (this.teamsToPlayMap.get(team2.teamNumber).size === 0) {
                                 this.refreshTeamsToPlay(team2);
                             }
