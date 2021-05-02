@@ -6,7 +6,11 @@ class Generator {
 
         this.constraints = [];
 
-        this.gamePool = [];
+        this.gamePool = new Map();
+        
+        this.teams.forEach( team => {
+            this.gamePool.set(team.teamNumber, new Set())
+        });
 
         this.teamsToPlayAtHomeMap = new Map();
 
@@ -67,7 +71,7 @@ class Generator {
                     const game = {home: team1, away: team2};
                     
                     this.teamsToPlayAtHomeMap.get(team1.teamNumber).delete(team2.teamNumber);
-                    this.gamePool.push(game);
+                    this.gamePool.get(team1.teamNumber).add(game);
                 }
             }
         });
