@@ -121,11 +121,14 @@ saveTeamBtn.addEventListener("click", () => {
 const scheduleBtn = document.getElementById("scheduleBtn");
 scheduleBtn.addEventListener("click", () => {
     const generator = new Generator(teamList);
-    const schedule = generator.createSchedule(17);
+    //const schedule = generator.createSchedule(10);
 
-    schedule.printSchedule();
+    //schedule.printSchedule();
 
-    displaySchedule(schedule);
-    console.log(schedule);
+    //displaySchedule(schedule);
+    //console.log(schedule);
     console.log(generator);
+
+    generator.createGamePool();
+    generator.printGamePool();
 });
