@@ -134,5 +134,7 @@ scheduleBtn.addEventListener("click", () => {
     generator.printGamePool();
     generator.displayGamePool();
 
-    generator.addSchedule();
+    const gameChoice = generator.gamePool.get(0).get(1);
+
+    console.log(gameChoice);
 });
