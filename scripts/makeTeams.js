@@ -136,5 +136,9 @@ scheduleBtn.addEventListener("click", () => {
 
     const gameChoice = generator.gamePool.get(0).get(1);
 
-    console.log(gameChoice);
+    const gamesMap = generator.generatePossibleNextGames(gameChoice, generator.gamePool);
+
+    console.log(gamesMap);
+
+    generator.generatePossibleNextGames({home: teamList[2], away: teamList[4]}, gamesMap);
 });

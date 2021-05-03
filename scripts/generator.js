@@ -105,40 +105,33 @@ class Generator {
         })
     }
 
-    addSchedule= () => {  //test currently
-        for (let gameweek = 0; gameweek < this.gameweeks; gameweek ++) {
-            this.teams.forEach( home => {
-                if (!this.teamHasGameInGameweek(home, gameweek)) {
-                    for (let i = 0; i < this.teams.length; i++) {
-                        const away = this.teams[i];
+    generatePossibleNextGames = (mostRecentGame, map) => {
+        const homeNumber = mostRecentGame.home.teamNumber;
+        const awayNumber = mostRecentGame.away.teamNumber;
 
-                        if (home != away && !this.teamHasGameInGameweek(away, gameweek) && this.gamePool.get(home.teamNumber).has(away.teamNumber)) {
-                            const game = this.gamePool.get(home.teamNumber).get(away.teamNumber);
-                            
-                            this.schedule[gameweek].push(game);
-                            this.hasGameMap.get(game.home.teamNumber)[gameweek] = true;
-                            this.hasGameMap.get(game.away.teamNumber)[gameweek] = true;
+        let gameMap = new Map();
+        
+        
+        this.teams.forEach( team => {
+            gameMap.set(team.teamNumber, new Map())
+        });
 
-                            this.gamePool.get(home.teamNumber).delete(away.teamNumber);
-                            break;
+        map.forEach( homeTeam => {
+            if (homeTeam.has(homeNumber) && homeTeam.has(awayNumber)) {
 
-                        }
+                homeTeam.forEach( game => {
+                    if (game.away.teamNumber != homeNumber && game.away.teamNumber != awayNumber) {
+                        console.log(game.home.teamNumber + " " + game.away.teamNumber);
+                        
+                        gameMap.get(game.home.teamNumber).set(game.away.teamNumber, game);
                     }
-                }
-            
-            });
-        }
+                    
+                });
+            }
+        });
 
-        console.log(this.schedule)
-       
-
-
-
-
+        return gameMap;
     }
 
-    teamHasGameInGameweek = (team, gameweek) => {
-        return this.hasGameMap.get(team.teamNumber)[gameweek];
-    }
 }
 
