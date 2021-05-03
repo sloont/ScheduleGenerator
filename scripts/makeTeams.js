@@ -103,7 +103,7 @@ const displaySchedule = (schedule) => {
 }
 
 
-const saveTeam = (teamList) => {
+const saveTeam = () => {
     const teamName = document.getElementsByName("teamName")[0].value;
     const teamColor = document.getElementsByName("teamColor")[0].value;
     const teamLogo = document.getElementsByName("teamLogo")[0].value;
@@ -114,13 +114,13 @@ const saveTeam = (teamList) => {
 
 const saveTeamBtn = document.getElementById("saveTeamBtn");
 saveTeamBtn.addEventListener("click", () => {
-    saveTeam(teamList);
+    saveTeam();
     console.log(teamList);
 });
 
 const scheduleBtn = document.getElementById("scheduleBtn");
 scheduleBtn.addEventListener("click", () => {
-    const generator = new Generator(teamList);
+    const generator = new Generator(teamList, 17);
     //const schedule = generator.createSchedule(10);
 
     //schedule.printSchedule();
@@ -128,7 +128,11 @@ scheduleBtn.addEventListener("click", () => {
     //displaySchedule(schedule);
     //console.log(schedule);
     console.log(generator);
+    console.log(generator.gamePool);
 
     generator.createGamePool();
     generator.printGamePool();
+    generator.displayGamePool();
+
+    generator.addSchedule();
 });

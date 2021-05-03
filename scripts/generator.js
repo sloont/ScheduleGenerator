@@ -1,15 +1,16 @@
 //Class to represent the generator v2
 
 class Generator {
-    constructor(teams) {
+    constructor(teams, gameweeks) {
         this.teams = teams;
+        this.gameweeks = gameweeks;
 
         this.constraints = [];
 
         this.gamePool = new Map();
         
         this.teams.forEach( team => {
-            this.gamePool.set(team.teamNumber, new Set())
+            this.gamePool.set(team.teamNumber, new Map())
         });
 
         this.teamsToPlayAtHomeMap = new Map();
@@ -17,6 +18,16 @@ class Generator {
         this.teams.forEach(team => {
             this.refreshTeamsToPlay(team);
         });
+
+        this.hasGameMap = new Map();
+        this.teams.forEach( team => {
+            this.hasGameMap.set(team.teamNumber, new Array(this.gameweeks).fill(false));
+        });
+
+        this.schedule = [];
+        for (let i = 0; i < this.gameweeks; i++) {
+            this.schedule.push([]);
+        }
     }
 
     refreshTeamsToPlay = team => {
@@ -71,7 +82,7 @@ class Generator {
                     const game = {home: team1, away: team2};
                     
                     this.teamsToPlayAtHomeMap.get(team1.teamNumber).delete(team2.teamNumber);
-                    this.gamePool.get(team1.teamNumber).add(game);
+                    this.gamePool.get(team1.teamNumber).set(team2.teamNumber, game);
                 }
             }
         });
@@ -81,6 +92,53 @@ class Generator {
         this.gamePool.forEach(game => {
             console.log(game);
         })
+    }
+
+    displayGamePool = () => {       //probably update
+        this.gamePool.forEach(teamNumber => {
+            teamNumber.forEach(game => {
+                postTeam(game["home"]);
+                countChildren();
+                postTeam(game["away"]);
+                countChildren();
+            })
+        })
+    }
+
+    addSchedule= () => {  //test currently
+        for (let gameweek = 0; gameweek < this.gameweeks; gameweek ++) {
+            this.teams.forEach( home => {
+                if (!this.teamHasGameInGameweek(home, gameweek)) {
+                    for (let i = 0; i < this.teams.length; i++) {
+                        const away = this.teams[i];
+
+                        if (home != away && !this.teamHasGameInGameweek(away, gameweek) && this.gamePool.get(home.teamNumber).has(away.teamNumber)) {
+                            const game = this.gamePool.get(home.teamNumber).get(away.teamNumber);
+                            
+                            this.schedule[gameweek].push(game);
+                            this.hasGameMap.get(game.home.teamNumber)[gameweek] = true;
+                            this.hasGameMap.get(game.away.teamNumber)[gameweek] = true;
+
+                            this.gamePool.get(home.teamNumber).delete(away.teamNumber);
+                            break;
+
+                        }
+                    }
+                }
+            
+            });
+        }
+
+        console.log(this.schedule)
+       
+
+
+
+
+    }
+
+    teamHasGameInGameweek = (team, gameweek) => {
+        return this.hasGameMap.get(team.teamNumber)[gameweek];
     }
 }
 
