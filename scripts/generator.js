@@ -177,25 +177,28 @@ class Generator {
 
     generateAllGameweeks = () => {
         const numberOfIndexes = this.teams.length / 2;
-        let factor1 = 1;
-        let factor2 = 2;
+        
         for (let i = numberOfIndexes - 1; i >= 0; i--) {
             
-            for (let n = 0; n < (factor1 * factor2); n++){
-            
-                this.indexObject["" + i] = n;
-                console.log(this.generateGameweek(this.gamePoolArray));
-                console.log(this.indexObject);
-            
-
+            this.pumpIndex(i);
+            for(let z = numberOfIndexes - 1; z > i; z--) {
+                this.resetIndex(z);
             }
-            factor1 += 2;
-            factor2 += 2;
+            
         }
     }
 
     resetIndex = (i) => {
         this.indexObject["" + i] = 0;
+    }
+
+    pumpIndex = (i) => {
+        const n = this.teams.length;
+
+        for (let x = 0; x < ((n-2*i)*((n-1)-2*i)); x ++) {
+            this.indexObject["" + i] = x;
+            console.log(this.indexObject);
+        }
     }
 
 }
