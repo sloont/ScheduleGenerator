@@ -194,6 +194,10 @@ class Generator {
         }
     }
 
+    resetIndex = (i) => {
+        this.indexObject["" + i] = 0;
+    }
+
 }
 
 
