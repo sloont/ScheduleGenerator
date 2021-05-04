@@ -29,6 +29,12 @@ class Generator {
         for (let i = 0; i < this.gameweeks; i++) {
             this.schedule.push([]);
         }
+
+        this.indexObject = {};
+
+        for (let n = 0; n < (this.teams.length/2); n++) {
+            this.indexObject["" + n] = 0;
+        }
     }
 
     refreshTeamsToPlay = team => {

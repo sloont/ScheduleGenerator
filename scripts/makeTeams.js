@@ -135,6 +135,7 @@ scheduleBtn.addEventListener("click", () => {
     generator.displayGamePool();
 
     console.log(generator.generateGameweek(generator.gamePoolArray));
+    console.log(generator.indexObject);
     
 
 });
