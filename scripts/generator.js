@@ -8,6 +8,7 @@ class Generator {
         this.constraints = [];
 
         this.gamePool = new Map();
+        this.gamePoolArray = [];
         
         this.teams.forEach( team => {
             this.gamePool.set(team.teamNumber, new Map())
@@ -83,6 +84,7 @@ class Generator {
                     
                     this.teamsToPlayAtHomeMap.get(team1.teamNumber).delete(team2.teamNumber);
                     this.gamePool.get(team1.teamNumber).set(team2.teamNumber, game);
+                    this.gamePoolArray.push(game);
                 }
             }
         });
@@ -105,7 +107,7 @@ class Generator {
         })
     }
 
-    generatePossibleNextGames = (mostRecentGame, map) => {
+    /*generatePossibleNextGames = (mostRecentGame, map, chosenGames) => {
         const homeNumber = mostRecentGame.home.teamNumber;
         const awayNumber = mostRecentGame.away.teamNumber;
 
@@ -131,6 +133,31 @@ class Generator {
         });
 
         return gameMap;
+    }*/
+
+    generateGameweek = (map, chosenGames = []) => {
+        //default
+        if (chosenGames.length === (this.teams.length/2)) {
+            return chosenGames;
+        }
+
+        let gameMap = [];
+        let gameSelection = chosenGames;
+
+        let gameChoice = map[0];
+        gameSelection.push(gameChoice);
+
+        for (let i = 0; i < map.length; i++) {
+            if (map[i].home.teamNumber != gameChoice.home.teamNumber &&
+                map[i].away.teamNumber != gameChoice.home.teamNumber &&
+                map[i].home.teamNumber != gameChoice.away.teamNumber &&
+                map[i].away.teamNumber != gameChoice.away.teamNumber) {
+                
+                console.log(map[i].home.teamNumber + " " + map[i].away.teamNumber);
+                gameMap.push(map[i]);
+                }
+        }
+        return this.generateGameweek(gameMap, gameSelection);        
     }
 
 }

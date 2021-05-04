@@ -134,11 +134,7 @@ scheduleBtn.addEventListener("click", () => {
     generator.printGamePool();
     generator.displayGamePool();
 
-    const gameChoice = generator.gamePool.get(0).get(1);
+    console.log(generator.generateGameweek(generator.gamePoolArray));
+    
 
-    const gamesMap = generator.generatePossibleNextGames(gameChoice, generator.gamePool);
-
-    console.log(gamesMap);
-
-    generator.generatePossibleNextGames({home: teamList[2], away: teamList[4]}, gamesMap);
 });
