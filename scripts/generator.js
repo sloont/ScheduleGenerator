@@ -29,12 +29,15 @@ class Generator {
         for (let i = 0; i < this.gameweeks; i++) {
             this.schedule.push([]);
         }
-
+//CONSTRUCTION OF THE INDEX OBJECT
         this.indexObject = {};
 
         for (let n = 0; n < (this.teams.length/2); n++) {
             this.indexObject["" + n] = 0;
         }
+
+        
+///////////////////////////////////////
     }
 
     refreshTeamsToPlay = team => {
@@ -141,30 +144,57 @@ class Generator {
         return gameMap;
     }*/
 
-    generateGameweek = (map, chosenGames = []) => {
+    generateGameweek = (array, chosenGames = []) => {
         //default
         if (chosenGames.length === (this.teams.length/2)) {
             return chosenGames;
         }
 
-        let gameMap = [];
+        let iteratorChoice = chosenGames.length;
+        let indexChoice = this.indexObject["" + iteratorChoice];
+
+
+        
+
+        let gameArray = [];
         let gameSelection = chosenGames;
 
-        let gameChoice = map[0];
+        let gameChoice = array[indexChoice];
         gameSelection.push(gameChoice);
 
-        for (let i = 0; i < map.length; i++) {
-            if (map[i].home.teamNumber != gameChoice.home.teamNumber &&
-                map[i].away.teamNumber != gameChoice.home.teamNumber &&
-                map[i].home.teamNumber != gameChoice.away.teamNumber &&
-                map[i].away.teamNumber != gameChoice.away.teamNumber) {
+        for (let i = 0; i < array.length; i++) {
+            if (array[i].home.teamNumber != gameChoice.home.teamNumber &&
+                array[i].away.teamNumber != gameChoice.home.teamNumber &&
+                array[i].home.teamNumber != gameChoice.away.teamNumber &&
+                array[i].away.teamNumber != gameChoice.away.teamNumber) {
                 
-                console.log(map[i].home.teamNumber + " " + map[i].away.teamNumber);
-                gameMap.push(map[i]);
+                //console.log(map[i].home.teamNumber + " " + map[i].away.teamNumber);
+                gameMap.push(array[i]);
                 }
         }
-        return this.generateGameweek(gameMap, gameSelection);        
+        return this.generateGameweek(gameArray, gameSelection);        
+    }
+
+    generateAllGameweeks = () => {
+        const numberOfIndexes = this.teams.length / 2;
+        let factor1 = 1;
+        let factor2 = 2;
+        for (let i = numberOfIndexes - 1; i >= 0; i--) {
+            
+            for (let n = 0; n < (factor1 * factor2); n++){
+            
+                this.indexObject["" + i] = n;
+                console.log(this.generateGameweek(this.gamePoolArray));
+                console.log(this.indexObject);
+            
+
+            }
+            factor1 += 2;
+            factor2 += 2;
+        }
     }
 
 }
+
+
 
