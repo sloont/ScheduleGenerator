@@ -48,13 +48,13 @@ class Generator {
         let teamsToPlayAtHome = new Set();
         this.teams.forEach(team2 => {
 
-            if (team.teamNumber !== team2.teamNumber) {
+            if (team !== team2) {
 
-                teamsToPlayAtHome.add(team2.teamNumber);
+                teamsToPlayAtHome.add(team2);
             }
         });
 
-        this.teamsToPlayAtHomeMap.set(team.teamNumber, teamsToPlayAtHome);
+        this.teamsToPlayAtHomeMap.set(team, teamsToPlayAtHome);
     }
 
     createGamePool = () => {
@@ -143,13 +143,14 @@ class Generator {
         }
 
         if (count === n/2) {
+
             validator = false;
         }
 
         return validator;
     }
 
-    indexes = (array = [], i = 0) => {
+    generateUniqueGameweeks = (array = [], i = 0) => {
 
         //DEFAULT
         const n = this.teams.length;
@@ -181,11 +182,9 @@ class Generator {
         for(let x = 0; x < ((n-2*i)*((n-1)-2*i)); x ++ ) {
             
             this.indexObject["" + i] = x;
-            this.indexes(combinations, i + 1 );
+            this.generateUniqueGameweeks(combinations, i + 1 );
             
         }
-
-        return this.indexArray;
     }
 
 }

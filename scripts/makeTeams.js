@@ -120,13 +120,8 @@ saveTeamBtn.addEventListener("click", () => {
 
 const scheduleBtn = document.getElementById("scheduleBtn");
 scheduleBtn.addEventListener("click", () => {
-    const generator = new Generator(teamList, 17);
-    //const schedule = generator.createSchedule(10);
-
-    //schedule.printSchedule();
-
-    //displaySchedule(schedule);
-    //console.log(schedule);
+    const generator = new Generator(teamList);
+    
     console.log(generator);
     //console.log(generator.gamePool);
 
@@ -134,12 +129,10 @@ scheduleBtn.addEventListener("click", () => {
     //generator.printGamePool();
     //generator.displayGamePool();
 
-    //generator.generateCombinationsMap(generator.combinationsMap);
-    //generator.makeGameweekArrayFromCombinationsMap(generator.combinationsMap);
-    //console.log(generator.uniqueGameweeksArray);
     
-    generator.indexes();
-    //generator.makeUniqueGameweeks();
+    
+    
+    generator.generateUniqueGameweeks();
     console.log(generator.uniqueGameweeksArray);
     
 });
