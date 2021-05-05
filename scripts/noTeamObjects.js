@@ -3,6 +3,13 @@
 class Generator {
     constructor(teams, gameweeks) {
         this.teams = teams;
+        ////    
+        let temp = [];
+        for (let i = 0; i < this.teams.length; i++) {
+            temp.push(this.teams[i].teamNumber);
+        }
+        this.teams = temp;
+        ////
         this.gameweeks = gameweeks;
 
         this.constraints = [];
@@ -11,7 +18,7 @@ class Generator {
         this.gamePoolArray = [];
         
         this.teams.forEach( team => {
-            this.gamePool.set(team.teamNumber, new Map())
+            this.gamePool.set(team, new Map())
         });
 
         this.teamsToPlayAtHomeMap = new Map();
@@ -22,7 +29,7 @@ class Generator {
 
         this.hasGameMap = new Map();
         this.teams.forEach( team => {
-            this.hasGameMap.set(team.teamNumber, new Array(this.gameweeks).fill(false));
+            this.hasGameMap.set(team, new Array(this.gameweeks).fill(false));
         });
 
         this.schedule = [];
@@ -51,11 +58,11 @@ class Generator {
     refreshTeamsToPlay = team => {
         let teamsToPlayAtHome = new Set();
         this.teams.forEach(team2 => {
-            if (team.teamNumber !== team2.teamNumber) {
-                teamsToPlayAtHome.add(team2.teamNumber);
+            if (team !== team2) {
+                teamsToPlayAtHome.add(team2);
             }
         });
-        this.teamsToPlayAtHomeMap.set(team.teamNumber, teamsToPlayAtHome);
+        this.teamsToPlayAtHomeMap.set(team, teamsToPlayAtHome);
     }
 
 
@@ -97,11 +104,11 @@ class Generator {
             for (let t2 = 0; t2 < this.teams.length; t2++) {
                 const team2 = this.teams[t2];
     
-                if (this.teamsToPlayAtHomeMap.get(team1.teamNumber).has(team2.teamNumber)) {
+                if (this.teamsToPlayAtHomeMap.get(team1).has(team2)) {
                     const game = {home: team1, away: team2};
                     
-                    this.teamsToPlayAtHomeMap.get(team1.teamNumber).delete(team2.teamNumber);
-                    this.gamePool.get(team1.teamNumber).set(team2.teamNumber, game);
+                    this.teamsToPlayAtHomeMap.get(team1).delete(team2);
+                    this.gamePool.get(team1).set(team2, game);
                     this.gamePoolArray.push(game);
                 }
             }
@@ -144,10 +151,10 @@ class Generator {
         gameSelection.push(gameChoice);
 
         for (let i = 0; i < array.length; i++) {
-            if (array[i].home.teamNumber != gameChoice.home.teamNumber &&
-                array[i].away.teamNumber != gameChoice.home.teamNumber &&
-                array[i].home.teamNumber != gameChoice.away.teamNumber &&
-                array[i].away.teamNumber != gameChoice.away.teamNumber) {
+            if (array[i].home != gameChoice.home &&
+                array[i].away != gameChoice.home &&
+                array[i].home != gameChoice.away &&
+                array[i].away != gameChoice.away) {
                 
                 
                 gameArray.push(array[i]);
@@ -276,8 +283,8 @@ class Generator {
         
         for (let i = 0; i < (n/2); i++) {
             for (let x = 0; x < (n/2); x++) {
-                if (gameweek[""+i].home.teamNumber === comparison[""+x].home.teamNumber &&
-                    gameweek[""+i].away.teamNumber === comparison[""+x].away.teamNumber) {
+                if (gameweek[""+i].home === comparison[""+x].home &&
+                    gameweek[""+i].away === comparison[""+x].away) {
                     
                     count++;
                     
