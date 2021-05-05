@@ -2,7 +2,7 @@
 
 class Generator {
 
-    constructor(teams, gameweeks) {
+    constructor(teams) {
 
         this.teams = teams;
         ////    
@@ -14,9 +14,6 @@ class Generator {
         }
         this.teams = temp;
         ////
-        this.gameweeks = gameweeks;
-
-        this.constraints = [];
 
         this.gamePool = new Map();
         this.gamePoolArray = [];
@@ -33,13 +30,6 @@ class Generator {
             this.refreshTeamsToPlay(team);
         });
 
-        this.hasGameMap = new Map();
-        
-        this.teams.forEach( team => {
-
-            this.hasGameMap.set(team, new Array(this.gameweeks).fill(false));
-        });
-
         
  //CONSTRUCTION OF THE INDEX OBJECT
         this.indexObject = {};
@@ -48,27 +38,23 @@ class Generator {
             this.indexObject["" + n] = 0;
         }
 
- //CONSTRUCTION OF THE COMBINATIONS OBJECT
-        this.combinationsObject = Object.assign({}, this.indexObject);
-    
- //CONSTRUCTION OF THE COMBINATIONS MAP
-        this.combinationsMap = new Map();
-        
         this.uniqueGameweeksArray = [];
-
-        
 
         this.indexArray = [];
     }
+    
+    refreshTeamsToPlay = team => {
 
-    refreshTeamsToPlay = (team) => {
         let teamsToPlayAtHome = new Set();
         this.teams.forEach(team2 => {
-            if (team !== team2) {
-                teamsToPlayAtHome.add(team2);
+
+            if (team.teamNumber !== team2.teamNumber) {
+
+                teamsToPlayAtHome.add(team2.teamNumber);
             }
         });
-        this.teamsToPlayAtHomeMap.set(team, teamsToPlayAtHome);
+
+        this.teamsToPlayAtHomeMap.set(team.teamNumber, teamsToPlayAtHome);
     }
 
     createGamePool = () => {
@@ -95,20 +81,6 @@ class Generator {
 
         this.gamePool.forEach(game => {
             console.log(game);
-        })
-    }
-
-    displayGamePool = () => {       //probably update
-
-        this.gamePool.forEach(teamNumber => {
-
-            teamNumber.forEach(game => {
-
-                postTeam(game["home"]);
-                countChildren();
-                postTeam(game["away"]);
-                countChildren();
-            })
         })
     }
 
@@ -148,100 +120,10 @@ class Generator {
 
         this.indexObject["" + i] = 0;
     }
-
-    pumpIndex = (i) => {
-
-        const n = this.teams.length;
-
-        for (let x = 0; x < ((n-2*i)*((n-1)-2*i)); x ++) {
-
-            this.indexObject["" + i] = x;
-            console.log(this.indexObject);
-        }
-        this.resetIndex(i);
-    }
-
-    generateCombinationsMap = (map, i = 0) => {
-        //DEFAULT
-        const n = this.teams.length;
-        
-
-        if (i === (n/2)) {
-
-            let tempObject = Object.assign({}, this.indexObject);
-            this.placeCombinationsInMap(tempObject);
-            return this.combinationsMap;
-            
-        }
-
-        for(let x = 0; x < ((n-2*i)*((n-1)-2*i)); x ++ ) {
-            
-            map.set(x, new Map());
-            this.indexObject["" + i] = x;
-            this.generateCombinationsMap(map.get(x), i + 1 );
-            
-        }
-
-        return this.combinationsMap;
-    }
-
-    placeCombinationsInMap = (indexObject) => {
-
-        const n = this.teams.length;
-        let tempMap = this.combinationsMap;
-
-        for (let i = 0; i < n/2 - 1; i++) {
-
-            let currentIndex = indexObject["" + i];
-            
-            tempMap = tempMap.get(currentIndex);
-        }
-
-        tempMap.set(indexObject["" + (n/2 - 1)], this.generateGameweek(this.gamePoolArray, indexObject));
-    }
-
-    makeGameweekArrayFromCombinationsMap = (map, i = 0) => {
-
-        const n = this.teams.length;
-        let validator = true;
-
-        if (i === (n/2)) {
-
-            if (this.uniqueGameweeksArray.length > 0) {
-
-                for (let q = 0; q < this.uniqueGameweeksArray.length; q++) {
-
-                    if (!this.compareGameweeks(this.uniqueGameweeksArray[q], map)) {
-
-                        validator = false;
-                        break;
-                    }
-
-                    
-                }
-
-                if (validator) {
-            
-                    this.uniqueGameweeksArray.push(map);
-                }
-
-                
-
-            } else {
-
-                this.uniqueGameweeksArray.push(map);
-            }
-            
-        }
-
-        for (let f = 0; f < ((n-2*i)*((n-1)-2*i)); f ++ ) {
-            
-            this.makeGameweekArrayFromCombinationsMap(map.get(f), i + 1);
-        }
-    }
+    
 //This method checks whether **ALL** fixtures are identical when comparing two gameweek objects
 //Returns False if these are identical gameweeks.
-    compareGameweeks = (gameweek, comparison) => {
+    compareGameweeks = (gameweek, comparison) => {  ////Here is where we could probably async something. Check all 4 games at once
 
         let validator = true;
         let count = 0;
@@ -268,6 +150,7 @@ class Generator {
     }
 
     indexes = (array = [], i = 0) => {
+
         //DEFAULT
         const n = this.teams.length;
         let combinations = array;
