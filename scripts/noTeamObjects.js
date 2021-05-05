@@ -56,7 +56,10 @@ class Generator {
         
         this.uniqueGameweeksArray = [];
 
-        }   
+        
+
+        this.indexArray = [];
+    }
 
     refreshTeamsToPlay = (team) => {
         let teamsToPlayAtHome = new Set();
@@ -156,34 +159,6 @@ class Generator {
             console.log(this.indexObject);
         }
         this.resetIndex(i);
-    }
-
-    indexCombinations = (i = 0, array = []) => {
-
-        const n = this.teams.length;
-        let combinations = array;
-
-        //DEFAULT
-        if (i > (n/2 -1)) {
-
-            return combinations;
-        }
-        
-        for (let x = 0; x < ((n-2*i)*((n-1)-2*i)); x ++ ) {
-
-            this.indexObject["" + i] = x;
-            let temp = Object.assign({}, this.indexObject);
-            
-            combinations.push(temp);
-            
-            
-        }
-
-        this.combinationsObject["" + i] = combinations;
-        this.resetIndex(i);
-        
-        
-        return this.indexCombinations(i + 1);
     }
 
     generateCombinationsMap = (map, i = 0) => {
@@ -290,6 +265,44 @@ class Generator {
         }
 
         return validator;
+    }
+
+    indexes = (array = [], i = 0) => {
+        //DEFAULT
+        const n = this.teams.length;
+        let combinations = array;
+
+        if (i === (n/2)) {
+
+            let gameweek = this.generateGameweek(this.gamePoolArray, this.indexObject);
+            let validator = true;
+
+            if (this.uniqueGameweeksArray.length > 0) {
+                for (let x = 0; x < this.uniqueGameweeksArray.length; x++) {
+                    if (!this.compareGameweeks(this.uniqueGameweeksArray[x], gameweek)) {
+                        validator = false;
+                        break;
+                    }
+                }
+                if (validator) {
+                    this.uniqueGameweeksArray.push(gameweek);
+                }
+            } else {
+                this.uniqueGameweeksArray.push(gameweek);
+            }
+
+            return this.indexArray;
+            
+        }
+
+        for(let x = 0; x < ((n-2*i)*((n-1)-2*i)); x ++ ) {
+            
+            this.indexObject["" + i] = x;
+            this.indexes(combinations, i + 1 );
+            
+        }
+
+        return this.indexArray;
     }
 
 }

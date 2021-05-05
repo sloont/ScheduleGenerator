@@ -134,9 +134,12 @@ scheduleBtn.addEventListener("click", () => {
     //generator.printGamePool();
     //generator.displayGamePool();
 
-    generator.generateCombinationsMap(generator.combinationsMap);
-    generator.makeGameweekArrayFromCombinationsMap(generator.combinationsMap);
-    console.log(generator.uniqueGameweeksArray);
+    //generator.generateCombinationsMap(generator.combinationsMap);
+    //generator.makeGameweekArrayFromCombinationsMap(generator.combinationsMap);
+    //console.log(generator.uniqueGameweeksArray);
     
+    generator.indexes();
+    //generator.makeUniqueGameweeks();
+    console.log(generator.uniqueGameweeksArray);
     
 });
