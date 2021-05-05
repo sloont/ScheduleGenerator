@@ -137,7 +137,7 @@ scheduleBtn.addEventListener("click", () => {
     console.log(generator.combinationsObject);
     console.log(generator.indexObject);
 
-    console.log(generator.generateCombinationsMap(generator.combinationsMap));
+    //console.log(generator.generateCombinationsMap(generator.combinationsMap));
     
     /*const indexObject = {0: 45, 1: 23, 2: 5, 3: 1};
     generator.placeCombinationsInMap(indexObject);
@@ -146,4 +146,6 @@ scheduleBtn.addEventListener("click", () => {
     console.log(generator.combinationsMap);
 
     console.log(generator.indexCombinations());*/
+
+    console.log(generator.generateCombinationsMap(generator.combinationsMap));
 });

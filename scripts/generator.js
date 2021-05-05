@@ -152,14 +152,14 @@ class Generator {
         return gameMap;
     }*/
 
-    generateGameweek = (array, chosenGames = []) => {
+    generateGameweek = (array, indexObject, chosenGames = []) => {
         //default
         if (chosenGames.length === (this.teams.length/2)) {
             return chosenGames;
         }
 
         let iteratorChoice = chosenGames.length;
-        let indexChoice = this.indexObject["" + iteratorChoice];
+        let indexChoice = indexObject["" + iteratorChoice];
 
 
         
@@ -177,10 +177,10 @@ class Generator {
                 array[i].away.teamNumber != gameChoice.away.teamNumber) {
                 
                 //console.log(map[i].home.teamNumber + " " + map[i].away.teamNumber);
-                gameMap.push(array[i]);
+                gameArray.push(array[i]);
                 }
         }
-        return this.generateGameweek(gameArray, gameSelection);        
+        return this.generateGameweek(gameArray, indexObject, gameSelection);        
     }
 
     generateAllGameweeks = () => {
@@ -266,7 +266,7 @@ class Generator {
             tempMap = tempMap.get(currentIndex);
         }
 
-        tempMap.set(indexObject["" + (n/2 - 1)], indexObject);
+        tempMap.set(indexObject["" + (n/2 - 1)], this.generateGameweek(this.gamePoolArray, indexObject));
     }
 
 
