@@ -182,7 +182,7 @@ class Generator {
         for (let x = 0; x < ((n-2*i)*((n-1)-2*i)); x ++ ) {
             this.indexObject["" + i] = x;
             let temp = Object.assign({}, this.indexObject);
-            console.log(this.indexObject);
+            
             combinations.push(temp);
             
             
@@ -232,17 +232,72 @@ class Generator {
     makeGameweekArrayFromCombinationsMap = (map, i = 0) => {
 
         const n = this.teams.length;
+        let validator = true;
 
         if (i === (n/2)) {
-            let gameCopy = Object.assign({}, map);
-            this.uniqueGameweeksArray.push(gameCopy);
+            if (this.uniqueGameweeksArray.length > 0) {
+
+                for (let q = 0; q < this.uniqueGameweeksArray.length; q++) {
+
+                    if (!this.compareGameweeks(this.uniqueGameweeksArray[q], map)) {
+
+                        validator = false;
+                        break;
+                    }
+
+                    
+                }
+
+                if (validator) {
+            
+                    this.uniqueGameweeksArray.push(map);
+                }
+
+                
+
+            } else {
+
+                this.uniqueGameweeksArray.push(map);
+            }
+            
         }
 
-        for(let x = 0; x < ((n-2*i)*((n-1)-2*i)); x ++ ) {
+        for (let f = 0; f < ((n-2*i)*((n-1)-2*i)); f ++ ) {
             
-            this.makeGameweekArrayFromCombinationsMap(map.get(x), i + 1);
+        this.makeGameweekArrayFromCombinationsMap(map.get(f), i + 1);
         }
     }
+//This method checks whether **ALL** fixtures are identical when comparing two gameweek objects
+//Returns False if these are identical gameweeks.
+    compareGameweeks = (gameweek, comparison) => {
+        let validator = true;
+        let count = 0;
+        const n = this.teams.length;
+        
+        for (let i = 0; i < (n/2); i++) {
+            for (let x = 0; x < (n/2); x++) {
+                if (gameweek[""+i].home.teamNumber === comparison[""+x].home.teamNumber &&
+                    gameweek[""+i].away.teamNumber === comparison[""+x].away.teamNumber) {
+                    
+                    count++;
+                    
+                }
+        
+            }
+        }
 
+        if (count === n/2) {
+            validator = false;
+        }
+
+        /*if (validator == false) {
+            console.log(validator);
+            console.log(count);
+            //console.log(gameweek);
+            console.log(comparison);
+        }*/
+
+        return validator;
+    }
 
 }
