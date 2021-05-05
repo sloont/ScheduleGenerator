@@ -124,34 +124,6 @@ class Generator {
         })
     }
 
-    /*generatePossibleNextGames = (mostRecentGame, map, chosenGames) => {
-        const homeNumber = mostRecentGame.home.teamNumber;
-        const awayNumber = mostRecentGame.away.teamNumber;
-
-        let gameMap = new Map();
-        
-        
-        this.teams.forEach( team => {
-            gameMap.set(team.teamNumber, new Map())
-        });
-
-        map.forEach( homeTeam => {
-            if (homeTeam.has(homeNumber) && homeTeam.has(awayNumber)) {
-
-                homeTeam.forEach( game => {
-                    if (game.away.teamNumber != homeNumber && game.away.teamNumber != awayNumber) {
-                        console.log(game.home.teamNumber + " " + game.away.teamNumber);
-                        
-                        gameMap.get(game.home.teamNumber).set(game.away.teamNumber, game);
-                    }
-                    
-                });
-            }
-        });
-
-        return gameMap;
-    }*/
-
     generateGameweek = (array, indexObject, chosenGames = []) => {
         //default
         if (chosenGames.length === (this.teams.length/2)) {
@@ -176,24 +148,11 @@ class Generator {
                 array[i].home.teamNumber != gameChoice.away.teamNumber &&
                 array[i].away.teamNumber != gameChoice.away.teamNumber) {
                 
-                //console.log(map[i].home.teamNumber + " " + map[i].away.teamNumber);
+                
                 gameArray.push(array[i]);
                 }
         }
         return this.generateGameweek(gameArray, indexObject, gameSelection);        
-    }
-
-    generateAllGameweeks = () => {
-        const numberOfIndexes = this.teams.length / 2;
-        
-        for (let i = numberOfIndexes - 1; i >= 0; i--) {
-            
-            this.pumpIndex(i);
-            /*for(let z = numberOfIndexes - 1; z > i; z--) {
-                this.resetIndex(z);
-            }*/
-            
-        }
     }
 
     resetIndex = (i) => {
@@ -230,7 +189,7 @@ class Generator {
         this.combinationsObject["" + i] = combinations;
         this.resetIndex(i);
         
-        //return this.indexCombinations(i+1, combinations);
+        
         return this.indexCombinations(i + 1);
     }
 
@@ -270,7 +229,9 @@ class Generator {
     }
 
 
+    makeGameweekArrayFromCombinationsMap = () => {
 
+    }
 
 
 }
