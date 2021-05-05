@@ -148,4 +148,6 @@ scheduleBtn.addEventListener("click", () => {
     console.log(generator.indexCombinations());*/
 
     console.log(generator.generateCombinationsMap(generator.combinationsMap));
+    generator.makeGameweekArrayFromCombinationsMap(generator.combinationsMap);
+    console.log(generator.uniqueGameweeksArray);
 });

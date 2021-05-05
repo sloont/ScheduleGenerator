@@ -44,6 +44,7 @@ class Generator {
  //CONSTRUCTION OF THE COMBINATIONS MAP
         this.combinationsMap = new Map();
         
+        this.uniqueGameweeksArray = [];
 
         }   
 
@@ -228,9 +229,19 @@ class Generator {
         tempMap.set(indexObject["" + (n/2 - 1)], this.generateGameweek(this.gamePoolArray, indexObject));
     }
 
+    makeGameweekArrayFromCombinationsMap = (map, i = 0) => {
 
-    makeGameweekArrayFromCombinationsMap = () => {
+        const n = this.teams.length;
 
+        if (i === (n/2)) {
+            let gameCopy = Object.assign({}, map);
+            this.uniqueGameweeksArray.push(gameCopy);
+        }
+
+        for(let x = 0; x < ((n-2*i)*((n-1)-2*i)); x ++ ) {
+            
+            this.makeGameweekArrayFromCombinationsMap(map.get(x), i + 1);
+        }
     }
 
 
