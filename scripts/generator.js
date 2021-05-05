@@ -29,7 +29,7 @@ class Generator {
         for (let i = 0; i < this.gameweeks; i++) {
             this.schedule.push([]);
         }
-//CONSTRUCTION OF THE INDEX OBJECT
+ //CONSTRUCTION OF THE INDEX OBJECT
         this.indexObject = {};
 
         for (let n = 0; n < (this.teams.length/2); n++) {
@@ -37,8 +37,15 @@ class Generator {
         }
 
         
-///////////////////////////////////////
-    }
+   ///////////////////////////////////////
+ //CONSTRUCTION OF THE COMBINATIONS OBJECT
+        this.combinationsObject = Object.assign({}, this.indexObject);
+    
+ //CONSTRUCTION OF THE COMBINATIONS MAP
+        this.combinationsMap = new Map();
+        
+
+        }   
 
     refreshTeamsToPlay = team => {
         let teamsToPlayAtHome = new Set();
@@ -49,6 +56,7 @@ class Generator {
         });
         this.teamsToPlayAtHomeMap.set(team.teamNumber, teamsToPlayAtHome);
     }
+
 
     createSchedule = (gameweeks) => {
         let schedule = new Schedule(this.teams, gameweeks);
@@ -181,9 +189,9 @@ class Generator {
         for (let i = numberOfIndexes - 1; i >= 0; i--) {
             
             this.pumpIndex(i);
-            for(let z = numberOfIndexes - 1; z > i; z--) {
+            /*for(let z = numberOfIndexes - 1; z > i; z--) {
                 this.resetIndex(z);
-            }
+            }*/
             
         }
     }
@@ -199,9 +207,50 @@ class Generator {
             this.indexObject["" + i] = x;
             console.log(this.indexObject);
         }
+        this.resetIndex(i);
     }
 
+    indexCombinations = (i = 0, array = []) => {
+        const n = this.teams.length;
+        let combinations = array;
+
+        //DEFAULT
+        if (i > (n/2 -1)) {
+            return combinations;
+        }
+        
+        for (let x = 0; x < ((n-2*i)*((n-1)-2*i)); x ++ ) {
+            this.indexObject["" + i] = x;
+            let temp = Object.assign({}, this.indexObject);
+            console.log(this.indexObject);
+            combinations.push(temp);
+            
+            
+        }
+        this.combinationsObject["" + i] = combinations;
+        this.resetIndex(i);
+        
+        //return this.indexCombinations(i+1, combinations);
+        return this.indexCombinations(i + 1);
+    }
+
+    generateCombinationsMap = (map, i = 0) => {
+        //DEFAULT
+        const n = this.teams.length;
+        if (i === (n/2)) {
+            return this.combinationsMap;
+        }
+
+        for(let x = 0; x < ((n-2*i)*((n-1)-2*i)); x ++ ) {
+            map.set(x, new Map());
+            this.generateCombinationsMap(map.get(x), i + 1 );
+        }
+
+        return this.combinationsMap;
+    }
+
+
+
+
+
 }
-
-
-
