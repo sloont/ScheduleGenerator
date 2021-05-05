@@ -128,13 +128,13 @@ scheduleBtn.addEventListener("click", () => {
     //displaySchedule(schedule);
     //console.log(schedule);
     console.log(generator);
-    console.log(generator.gamePool);
+    //console.log(generator.gamePool);
 
     generator.createGamePool();
-    generator.printGamePool();
+    //generator.printGamePool();
     //generator.displayGamePool();
 
-    console.log(generator.generateCombinationsMap(generator.combinationsMap));
+    generator.generateCombinationsMap(generator.combinationsMap);
     generator.makeGameweekArrayFromCombinationsMap(generator.combinationsMap);
     console.log(generator.uniqueGameweeksArray);
     
