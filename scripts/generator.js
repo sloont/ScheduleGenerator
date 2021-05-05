@@ -237,16 +237,36 @@ class Generator {
     generateCombinationsMap = (map, i = 0) => {
         //DEFAULT
         const n = this.teams.length;
+        
+
         if (i === (n/2)) {
+            let tempObject = Object.assign({}, this.indexObject);
+            this.placeCombinationsInMap(tempObject);
             return this.combinationsMap;
+            
         }
 
         for(let x = 0; x < ((n-2*i)*((n-1)-2*i)); x ++ ) {
+            
             map.set(x, new Map());
+            this.indexObject["" + i] = x;
             this.generateCombinationsMap(map.get(x), i + 1 );
+            
         }
 
         return this.combinationsMap;
+    }
+
+    placeCombinationsInMap = (indexObject) => {
+        const n = this.teams.length;
+        let tempMap = this.combinationsMap;
+        for (let i = 0; i < n/2 - 1; i++) {
+            let currentIndex = indexObject["" + i];
+            
+            tempMap = tempMap.get(currentIndex);
+        }
+
+        tempMap.set(indexObject["" + (n/2 - 1)], indexObject);
     }
 
 
