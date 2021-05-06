@@ -200,15 +200,12 @@ class Generator {
         let conflicts = [];
         
         
-        
-        workingSchedule.push(this.uniqueGameweeksArray[0]);
+        const x = this.pickRandomFirstGame();
+        workingSchedule.push(this.uniqueGameweeksArray[x]);
     
         while (workingSchedule.length < (n-1 * 2)) {
-                //n < 200) {
     
-            
-            
-            for (let x = 1; x < this.uniqueGameweeksArray.length; x++) {
+            for (let x = 0; x < this.uniqueGameweeksArray.length; x++) {
                 
                 let validator = true;
                 
@@ -237,11 +234,14 @@ class Generator {
                     
                 }
     
-                
             }
-            //n++
+            
         }
-        
+        workingSchedule.forEach((gameweek) => {
+            this.randomizeArray(gameweek);
+        });
+
+        this.randomizeArray(workingSchedule);
         this.putTeamObjectsInSchedule(workingSchedule);
         this.displaySchedule(workingSchedule);
         return workingSchedule;
@@ -294,6 +294,28 @@ class Generator {
 
     refreshTeamListObjects = () => {
         this.teams = teamList;
+    }
+
+    pickRandomFirstGame = () => {
+        return Math.floor(Math.random() * this.uniqueGameweeksArray.length);
+        
+    }
+
+    randomizeArray = (array) => {
+
+        let currentIndex = array.length;
+        let temp, randomIndex;
+
+        while ( 0 !== currentIndex) {
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
+
+            temp = array[currentIndex];
+            array[currentIndex] = array[randomIndex];
+            array[randomIndex] = temp;
+        }
+            
+        return array;
     }
 
 }

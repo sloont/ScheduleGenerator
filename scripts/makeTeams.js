@@ -129,13 +129,22 @@ scheduleBtn.addEventListener("click", () => {
     generator.createGamePool();
     //generator.printGamePool();
     //generator.displayGamePool();
+    const wrapper = document.getElementById("gridWrapper");
+    while (wrapper.firstChild) {
 
+        wrapper.removeChild(wrapper.lastChild);
+    }
     
     
     
     generator.generateUniqueGameweeks();
-    console.log(generator.uniqueGameweeksArray);
 
-    console.log(generator.makeSchedule());
+    generator.makeSchedule();
     
 });
+
+/*const randomizeBtn = document.getElementById("randomizeBtn");
+randomizeBtn.addEventListener("click", () => {
+
+})
+*/ 
