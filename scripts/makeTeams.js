@@ -5,6 +5,22 @@ let teamList = [];
 let cloneCount = 0;
 let childCount = 0;
 
+const randomizeArray = (array) => {
+    let currentIndex = array.length;
+        let temp, randomIndex;
+
+        while ( 0 !== currentIndex) {
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
+
+            temp = array[currentIndex];
+            array[currentIndex] = array[randomIndex];
+            array[randomIndex] = temp;
+        }
+            
+        return array;
+}
+
 const gridWrapper = document.getElementById("gridWrapper");
 
 const insertVersus = () => {
@@ -104,7 +120,9 @@ const displaySchedule = (schedule) => {
 }
 
 const teamPlates = document.getElementById("teamPlates");
+
 const saveTeam = () => {
+
     const teamName = document.getElementsByName("teamName")[0].value;
     const teamColor = document.getElementsByName("teamColor")[0].value;
     const teamLogo = document.getElementsByName("teamLogo")[0].value;
@@ -112,6 +130,30 @@ const saveTeam = () => {
     const team = new Team(numberOfTeams++, teamName, teamColor, teamLogo);
     teamList.push(team);
     postTeam(team, teamPlates);
+}
+
+const makeRandomTeams = () => {
+
+    let colors = ["blue", "red", "green", "purple", "yellow", "orange", "lightblue", "white"];
+    let logos = ["benderSVG", "frySVG", "leelaSVG", "nibblerSVG", "professorSVG", "zoidbergSVG", "jakeTheDogSVG", "stormtrooperSVG"];
+    let teamNames = ["Cardinals", "Falcons", "Ravens", "Bills", "Panthers", "Bears", "Bengals", "Browns", "Cowboys", "Broncos", "Lions", "Packers", "Texans", "Colts", "Jaguars", "Chiefs", "Chargers", "Rams", "Dolphins", "Vikings", "Patriots", "Saints", "Giants", "Jets", "Raiders", "Eagles", "Steelers", "49ers", "Seahawks", "Buccaneers", "Titans"];
+
+    randomizeArray(colors);
+    randomizeArray(logos);
+    randomizeArray(teamNames);
+
+    const numberTeams = document.getElementsByName("numberOfTeams")[0].value;
+
+    for (let i = 0; i < numberTeams; i++) {
+
+        const team = new Team(i, teamNames[i], colors[i], logos[i]);
+        teamList.push(team);
+        postTeam(team, teamPlates);
+
+    }
+
+
+
 }
 
 const saveTeamBtn = document.getElementById("saveTeamBtn");
@@ -144,8 +186,9 @@ scheduleBtn.addEventListener("click", () => {
     
 });
 
-/*const randomizeBtn = document.getElementById("randomizeBtn");
+const randomizeBtn = document.getElementById("randomizeBtn");
 randomizeBtn.addEventListener("click", () => {
+    
+    makeRandomTeams();
 
 })
-*/ 
