@@ -133,8 +133,8 @@ class Generator {
 
             for (let x = 0; x < (n/2); x++) {
 
-                if (gameweek[""+i].home === comparison[""+x].home &&
-                    gameweek[""+i].away === comparison[""+x].away) {
+                if (gameweek[i].home === comparison[x].home &&
+                    gameweek[i].away === comparison[x].away) {
                     
                     count++;
                     
