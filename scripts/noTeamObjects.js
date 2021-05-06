@@ -192,8 +192,109 @@ class Generator {
 
         return this.indexArray;
     }
-    
+
+    makeSchedule = () => {
+
+        let n = this.teams.length;
+        let workingSchedule = [];
+        let conflicts = [];
         
+        
+        
+        workingSchedule.push(this.uniqueGameweeksArray[0]);
+    
+        while (workingSchedule.length < (n-1 * 2)) {
+                //n < 200) {
+    
+            
+            
+            for (let x = 1; x < this.uniqueGameweeksArray.length; x++) {
+                
+                let validator = true;
+                
+                let comparison = this.uniqueGameweeksArray[x];
+                
+    
+                for (let z = 0; z < workingSchedule.length; z++) {
+                    
+                    let gameweek = workingSchedule[z];
+                    conflicts.push(this.findConflict(gameweek, comparison));
+                }
+                for (const bool of conflicts) {
+                    
+                    if (bool == false) {
+                        
+                        validator = false;
+                        
+                        conflicts = [];
+                        break;
+                    }
+                    
+                }
+                if (validator) {
+                    
+                    workingSchedule.push(comparison);
+                    
+                }
+    
+                
+            }
+            //n++
+        }
+        
+        this.putTeamObjectsInSchedule(workingSchedule);
+        this.displaySchedule(workingSchedule);
+        return workingSchedule;
+    }
+    
+    ///Should check whether **ONE** fixture is identical and return false
+    findConflict = (gameweek, comparison) => {
+    
+        for (let i = 0; i < gameweek.length; i++) {
+
+            for (let x = 0; x < comparison.length; x++) {
+    
+                if (gameweek[i].home === comparison[x].home &&
+                    gameweek[i].away === comparison[x].away) {
+
+                    return false;
+                    
+                }
+            }
+        }
+        
+        return true;
+    }
+
+    putTeamObjectsInSchedule = (schedule) => {
+
+        this.refreshTeamListObjects();
+
+        for (let i = 0; i < schedule.length; i++) {
+
+            for (let j = 0; j < schedule[i].length; j++) {
+
+                let home = schedule[i][j].home;
+                let away = schedule[i][j].away;
+
+                schedule[i][j].home = this.teams[home];
+                schedule[i][j].away = this.teams[away];
+
+            }
+        }
+
+        return schedule;
+    }
+
+    displaySchedule = (schedule) => {       
+
+        displaySchedule(schedule);
+                   
+    }
+
+    refreshTeamListObjects = () => {
+        this.teams = teamList;
+    }
 
 }
 

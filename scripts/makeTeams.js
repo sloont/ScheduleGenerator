@@ -94,6 +94,7 @@ const displaySchedule = (schedule) => {
             const home = gameweekArray[j].home;
             const away = gameweekArray[j].away;
             // grab the team objects for home and away within the object for a game
+            
             postTeam(home);
             countChildren();
             postTeam(away);
@@ -134,5 +135,7 @@ scheduleBtn.addEventListener("click", () => {
     
     generator.generateUniqueGameweeks();
     console.log(generator.uniqueGameweeksArray);
+
+    console.log(generator.makeSchedule());
     
 });
