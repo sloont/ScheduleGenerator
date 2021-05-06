@@ -159,23 +159,8 @@ class Generator {
         if (i === (n/2)) {
 
             let gameweek = this.generateGameweek(this.gamePoolArray, this.indexObject);
-            let validator = true;
-
-            if (this.uniqueGameweeksArray.length > 0) {
-                for (let x = 0; x < this.uniqueGameweeksArray.length; x++) {
-                    if (!this.compareGameweeks(this.uniqueGameweeksArray[x], gameweek)) {
-                        validator = false;
-                        break;
-                    }
-                }
-                if (validator) {
-                    this.uniqueGameweeksArray.push(gameweek);
-                }
-            } else {
-                this.uniqueGameweeksArray.push(gameweek);
-            }
-
-            return this.indexArray;
+            
+            this.gameweekValidation(gameweek);
             
         }
 
@@ -186,6 +171,29 @@ class Generator {
             
         }
     }
+
+    gameweekValidation = (gameweek) => {
+
+        let validator = true;
+
+        if (this.uniqueGameweeksArray.length > 0) {
+            for (let x = 0; x < this.uniqueGameweeksArray.length; x++) {
+                if (!this.compareGameweeks(this.uniqueGameweeksArray[x], gameweek)) {
+                    validator = false;
+                    break;
+                }
+            }
+            if (validator) {
+                this.uniqueGameweeksArray.push(gameweek);
+            }
+        } else {
+            this.uniqueGameweeksArray.push(gameweek);
+        }
+
+        return this.indexArray;
+    }
+    
+        
 
 }
 
