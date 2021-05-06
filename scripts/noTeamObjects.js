@@ -159,23 +159,8 @@ class Generator {
         if (i === (n/2)) {
 
             let gameweek = this.generateGameweek(this.gamePoolArray, this.indexObject);
-            let validator = true;
-
-            if (this.uniqueGameweeksArray.length > 0) {
-                for (let x = 0; x < this.uniqueGameweeksArray.length; x++) {
-                    if (!this.compareGameweeks(this.uniqueGameweeksArray[x], gameweek)) {
-                        validator = false;
-                        break;
-                    }
-                }
-                if (validator) {
-                    this.uniqueGameweeksArray.push(gameweek);
-                }
-            } else {
-                this.uniqueGameweeksArray.push(gameweek);
-            }
-
-            return this.indexArray;
+            
+            this.gameweekValidation(gameweek);
             
         }
 
@@ -185,6 +170,152 @@ class Generator {
             this.generateUniqueGameweeks(combinations, i + 1 );
             
         }
+    }
+
+    gameweekValidation = (gameweek) => {
+
+        let validator = true;
+
+        if (this.uniqueGameweeksArray.length > 0) {
+            for (let x = 0; x < this.uniqueGameweeksArray.length; x++) {
+                if (!this.compareGameweeks(this.uniqueGameweeksArray[x], gameweek)) {
+                    validator = false;
+                    break;
+                }
+            }
+            if (validator) {
+                this.uniqueGameweeksArray.push(gameweek);
+            }
+        } else {
+            this.uniqueGameweeksArray.push(gameweek);
+        }
+
+        return this.indexArray;
+    }
+
+    makeSchedule = () => {
+
+        let n = this.teams.length;
+        let workingSchedule = [];
+        let conflicts = [];
+        
+        
+        const x = this.pickRandomFirstGame();
+        workingSchedule.push(this.uniqueGameweeksArray[x]);
+    
+        while (workingSchedule.length < (n-1 * 2)) {
+    
+            for (let x = 0; x < this.uniqueGameweeksArray.length; x++) {
+                
+                let validator = true;
+                
+                let comparison = this.uniqueGameweeksArray[x];
+                
+    
+                for (let z = 0; z < workingSchedule.length; z++) {
+                    
+                    let gameweek = workingSchedule[z];
+                    conflicts.push(this.findConflict(gameweek, comparison));
+                }
+                for (const bool of conflicts) {
+                    
+                    if (bool == false) {
+                        
+                        validator = false;
+                        
+                        conflicts = [];
+                        break;
+                    }
+                    
+                }
+                if (validator) {
+                    
+                    workingSchedule.push(comparison);
+                    
+                }
+    
+            }
+            
+        }
+        workingSchedule.forEach((gameweek) => {
+            this.randomizeArray(gameweek);
+        });
+
+        this.randomizeArray(workingSchedule);
+        this.putTeamObjectsInSchedule(workingSchedule);
+        this.displaySchedule(workingSchedule);
+        return workingSchedule;
+    }
+    
+    ///Should check whether **ONE** fixture is identical and return false
+    findConflict = (gameweek, comparison) => {
+    
+        for (let i = 0; i < gameweek.length; i++) {
+
+            for (let x = 0; x < comparison.length; x++) {
+    
+                if (gameweek[i].home === comparison[x].home &&
+                    gameweek[i].away === comparison[x].away) {
+
+                    return false;
+                    
+                }
+            }
+        }
+        
+        return true;
+    }
+
+    putTeamObjectsInSchedule = (schedule) => {
+
+        this.refreshTeamListObjects();
+
+        for (let i = 0; i < schedule.length; i++) {
+
+            for (let j = 0; j < schedule[i].length; j++) {
+
+                let home = schedule[i][j].home;
+                let away = schedule[i][j].away;
+
+                schedule[i][j].home = this.teams[home];
+                schedule[i][j].away = this.teams[away];
+
+            }
+        }
+
+        return schedule;
+    }
+
+    displaySchedule = (schedule) => {       
+
+        displaySchedule(schedule);
+                   
+    }
+
+    refreshTeamListObjects = () => {
+        this.teams = teamList;
+    }
+
+    pickRandomFirstGame = () => {
+        return Math.floor(Math.random() * this.uniqueGameweeksArray.length);
+        
+    }
+
+    randomizeArray = (array) => {
+
+        let currentIndex = array.length;
+        let temp, randomIndex;
+
+        while ( 0 !== currentIndex) {
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
+
+            temp = array[currentIndex];
+            array[currentIndex] = array[randomIndex];
+            array[randomIndex] = temp;
+        }
+            
+        return array;
     }
 
 }

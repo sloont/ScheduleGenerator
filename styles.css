@@ -11,13 +11,29 @@ html {
 }
 /*containers for the test displays*/
 
+#teamInformation {
+    margin: auto; 
+
+    display: grid;
+    grid-template-columns: 1fr 6fr;
+
+    width: 90vw;
+}
+
+#teamPlates {
+    margin: auto;
+    display: grid;
+    grid-column: 1/7;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+}
 
 #gridWrapper {
     margin: auto; /*this is old and should stay */
 
     display: grid;
     grid-template-columns: 6fr 1fr 6fr;
-    grid-template-rows: repeat(4 1fr);
+    
 
     width: 30vw;
 }
@@ -162,4 +178,12 @@ html {
     line-height: 110%;
     letter-spacing: 2px;
     text-align: center;
+}
+
+.form {
+    
+}
+
+.buttonContainer {
+    grid-column: 2/7;
 }
