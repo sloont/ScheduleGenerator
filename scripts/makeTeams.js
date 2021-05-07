@@ -134,6 +134,9 @@ const saveTeam = () => {
 
 const makeRandomTeams = () => {
 
+    teamList = [];
+    numberOfTeams = 0;
+
     let colors = ["blue", "red", "green", "purple", "yellow", "orange", "lightblue", "white"];
     let logos = ["benderSVG", "frySVG", "leelaSVG", "nibblerSVG", "professorSVG", "zoidbergSVG", "jakeTheDogSVG", "stormtrooperSVG"];
     let teamNames = ["Cardinals", "Falcons", "Ravens", "Bills", "Panthers", "Bears", "Bengals", "Browns", "Cowboys", "Broncos", "Lions", "Packers", "Texans", "Colts", "Jaguars", "Chiefs", "Chargers", "Rams", "Dolphins", "Vikings", "Patriots", "Saints", "Giants", "Jets", "Raiders", "Eagles", "Steelers", "49ers", "Seahawks", "Buccaneers", "Titans"];
@@ -149,6 +152,7 @@ const makeRandomTeams = () => {
         const team = new Team(i, teamNames[i], colors[i], logos[i]);
         teamList.push(team);
         postTeam(team, teamPlates);
+        numberOfTeams++;
 
     }
 
@@ -156,14 +160,31 @@ const makeRandomTeams = () => {
 
 }
 
+const removeTeamsFromDOM = (parentNode) => {
+    while (parentNode.firstChild) {
+
+        parentNode.removeChild(parentNode.lastChild);
+    }
+}
+
+
 const saveTeamBtn = document.getElementById("saveTeamBtn");
+
 saveTeamBtn.addEventListener("click", () => {
-    saveTeam();
-    console.log(teamList);
+    if (teamList.length < 9) {
+        console.log(teamList);
+        saveTeam();
+    }
+    
 });
 
 const scheduleBtn = document.getElementById("scheduleBtn");
 scheduleBtn.addEventListener("click", () => {
+    if (teamList.length % 2 === 1) {
+        const bye = new Team(numberOfTeams++, "BYE", "bye", "bye");
+        teamList.push(bye);
+    }
+    saveTeamBtn.disabled = true;
     const generator = new Generator(teamList);
     
     console.log(generator);
@@ -172,11 +193,8 @@ scheduleBtn.addEventListener("click", () => {
     generator.createGamePool();
     //generator.printGamePool();
     //generator.displayGamePool();
-    const wrapper = document.getElementById("gridWrapper");
-    while (wrapper.firstChild) {
-
-        wrapper.removeChild(wrapper.lastChild);
-    }
+    removeTeamsFromDOM(gridWrapper);
+    
     
     
     
@@ -189,6 +207,7 @@ scheduleBtn.addEventListener("click", () => {
 const randomizeBtn = document.getElementById("randomizeBtn");
 randomizeBtn.addEventListener("click", () => {
     
+    removeTeamsFromDOM(teamPlates);
     makeRandomTeams();
 
 })
