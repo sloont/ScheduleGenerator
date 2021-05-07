@@ -12,21 +12,15 @@ html {
 /*containers for the test displays*/
 
 #teamInformation {
-    margin: auto; 
-
-    display: grid;
-    grid-template-columns: 1fr 6fr;
-
-    width: 90vw;
+    position: fixed;
+    width: 20vw;
+    height: 100%;
+    top: 0;
+    left: 1em;
+    border: 2px solid rgba(0,136,169);
 }
 
-#teamPlates {
-    margin: auto;
-    display: grid;
-    grid-column: 1/7;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-}
+
 
 #gridWrapper {
     margin: auto; /*this is old and should stay */
@@ -185,5 +179,5 @@ html {
 }
 
 .buttonContainer {
-    grid-column: 2/7;
+    
 }
