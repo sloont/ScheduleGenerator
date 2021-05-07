@@ -202,6 +202,14 @@ class Generator {
         
         const x = this.pickRandomFirstGame();
         workingSchedule.push(this.uniqueGameweeksArray[x]);
+
+        if (n === 2) {
+            workingSchedule = this.uniqueGameweeksArray;
+            this.randomizeArray(workingSchedule);
+            this.putTeamObjectsInSchedule(workingSchedule);
+            this.displaySchedule(workingSchedule);
+            return workingSchedule;
+        }
     
         while (workingSchedule.length < (n-1 * 2)) {
     
