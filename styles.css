@@ -318,10 +318,11 @@ li {
 .custom-select {
     position: relative;
     font-family: "Noto Sans JP", sans-serif;
-    margin-top: 1em;
+    margin-top: 2em;
     margin-left: 3em;
     width: 14em;
-    height: 2em;
+    
+    
   }
   
   .custom-select select {
@@ -363,7 +364,7 @@ li {
   .select-items {
     position: absolute;
     background-color: rgba(0,136,169,1);;
-    top: 100%;
+    top: 42px;
     left: 0;
     right: 0;
     z-index: 99;
