@@ -44,23 +44,51 @@
         <option value="stormtrooperSVG">Stormtrooper</option>
       </select></p> 
     </div>
-      <p class="formLabel">Number of Teams: <br><br><select id="numberOfTeams" name ="numberOfTeams">
+    <div class="custom-select">
+      <select id="numberOfTeams" name ="numberOfTeams">
+        <option value="Unselected">Number of Teams: </option>
         <option value="2">2</option>
         <option value="3">3</option>
         <option value="4">4</option>
         <option value="5">5</option>
-        <option value="6" selected>6</option>
+        <option value="6">6</option>
         <option value="7">7</option>
         <option value="8">8</option>
-      </select></p>
+      </select>
+    </div>
 
     </div>
-    <div class="buttonContainer">
+    
       <button id="saveTeamBtn" style="display: none">SAVE TEAM</button>
-      <button id="randomizeBtn">RANDOMIZE</button>
-      <button id="scheduleBtn">RANDOM SCHEDULE</button>
+      <!--<button id="randomizeBtn">RANDOMIZE</button>
+      <button id="scheduleBtn">RANDOM SCHEDULE</button>-->
+      <nav>
+        <ul class="buttons">
+        <li><a href="#" class="button" id="randomizeBtn">
+            <div class="bottom"></div>
+            <div class="top">
+                <div class="label">RANDOMIZE</div>
+                <div class="button-border button-border-top"></div>
+                <div class="button-border button-border-right"></div>
+                <div class="button-border button-border-bottom"></div>
+                <div class="button-border button-border-left"></div>
+            </div>
+        </a></li>
+    
+        <li><a href="#" class="button" id="scheduleBtn">
+            <div class="bottom"></div>
+            <div class="top">
+                <div class="label">SCHEDULE</div>
+                <div class="button-border button-border-top"></div>
+                <div class="button-border button-border-right"></div>
+                <div class="button-border button-border-bottom"></div>
+                <div class="button-border button-border-left"></div>
+            </div>
+        </a></li>
+        </ul>
+    </nav>
       
-    </div><br><br>
+    <br><br>
     <div id="teamPlates">
 
     </div>
@@ -87,7 +115,7 @@
   <script src="scripts/team.js"></script>
   <script src="scripts/schedule.js"></script>
   <script src="scripts/noTeamObjects.js"></script>
-  
+  <script src="scripts/selectStyling.js"></script>
   <script src="scripts/makeTeams.js"></script>
   
 

@@ -8,29 +8,31 @@
 html {
     background: #24252a;
     font-family: "Noto Sans JP", sans-serif;
+    text-transform: uppercase;
 }
 /*containers for the test displays*/
 
 #teamInformation {
     position: fixed;
-    width: 20vw;
+    
     height: 100%;
     top: 0;
     left: 1em;
     border: 2px solid rgba(0,136,169);
     text-align: center;
+    min-width: 18em;
 }
 
 
 
 #gridWrapper {
-    margin: auto; /*this is old and should stay */
+    margin-left: calc(calc(100vw - 17em)/2); 
 
     display: grid;
     grid-template-columns: 6fr 1fr 6fr;
     
 
-    width: 30vw;
+    width: 36em;
 }
 .testContainer {
     margin: 10px auto 10px;
@@ -50,6 +52,13 @@ html {
 .flexContainer {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.gameweekContainer {
+    
+    display: flex;
     justify-content: space-between;
     flex-direction: row;
 }
@@ -173,12 +182,195 @@ html {
     line-height: 110%;
     letter-spacing: 2px;
     text-align: center;
+
 }
 
-.form {
+/*list styles*/
+nav {
+    margin:0;
+    padding:0;
+    text-align: center;
+}
+
+ul {
+    list-style: none;
+    padding-inline-start: 0px;
     
 }
 
-.buttonContainer {
-    
+li {
+    display: inline-block;
 }
+
+/*button styling*/
+
+.button {
+    display: inline-block;
+    text-decoration: none;
+    position: relative;
+   
+    margin-top: 13px;
+    margin-bottom: 20px;
+    margin-left: 1em;
+    margin-right: 1em;
+
+}
+
+.bottom {
+    position: absolute;
+    left: 7px;
+    top: 7px;
+    width: 122px;
+    height: 42px;
+    background-color: rgba(0,136,169,1);
+    display: block;
+}
+
+.top {
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 120px;
+    height: 40px;
+    
+    border: 2px solid #edf0f1;
+}
+
+.label {
+    font-family: "Noto Sans JP", sans-serif;
+    
+    color: #edf0f1;
+    font-size: 1rem;
+    line-height: 110%;
+    letter-spacing: 1px;
+    text-align: center;
+    text-transform: uppercase;
+    margin-top: 10%;
+}
+
+.button:hover .bottom {
+    left: 2px;
+    top: 2px;
+    width: 120px;
+    height: 40px;
+    background-color: #edf0f1;
+    -webkit-transition: all .20s ease-out;
+    -moz-transition: all .20s ease-out;
+    -o-transition: all .20s ease-out;
+    transition: all .20s ease-out;
+}
+
+.button:hover .label {
+    color: rgba(0,136,169,1);
+    -webkit-transition: all .20s ease-out;
+    -moz-transition: all .20s ease-out;
+    -o-transition: all .20s ease-out;
+    transition: all .20s ease-out;
+}
+
+.button-border {
+    position: absolute;
+    background-color: rgba(0,136,169,1);
+    -webkit-transition: all .25s ease-out;
+    -moz-transition: all .25s ease-out;
+    -o-transition: all .25s ease-out;
+    transition: all .25s ease-out;
+}
+
+.button:hover .button-border-left, .button:hover .button-border-right {
+    height: calc(100% + 2px);
+}
+
+.button:hover .button-border-top, .button:hover .button-border-bottom {
+    width: calc(100% + 2px);
+}
+
+.button-border-top {
+    left: -2px;
+    top: -2px;
+    width: 0;
+    height: 2px;
+}
+
+.button-border-right {
+    right: -2px;
+    top: -2px;
+    width: 2px;
+    height: 0;
+}
+
+.button-border-bottom {
+    right: -2px;
+    bottom: -2px;
+    width: 0px;
+    height: 2px;
+}
+
+.button-border-left {
+    left: -2px;
+    bottom: -2px;
+    width: 2px;
+    height: 0;
+}
+
+/*select tag styling*/
+/* The container must be positioned relative: */
+.custom-select {
+    position: relative;
+    font-family: "Noto Sans JP", sans-serif;
+    margin-top: 1em;
+  }
+  
+  .custom-select select {
+    display: none; /*hide original SELECT element: */
+  }
+  
+  .select-selected {
+    background-color: rgba(0,136,169,1);
+  }
+  
+  /* Style the arrow inside the select element: */
+  .select-selected:after {
+    position: absolute;
+    content: "";
+    top: 14px;
+    right: 10px;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-color: #fff transparent transparent transparent;
+  }
+  
+  /* Point the arrow upwards when the select box is open (active): */
+  .select-selected.select-arrow-active:after {
+    border-color: transparent transparent #fff transparent;
+    top: 7px;
+  }
+  
+  /* style the items (options), including the selected item: */
+  .select-items div,.select-selected {
+    color: #ffffff;
+    padding: 8px 16px;
+    border: 1px solid transparent;
+    border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+    cursor: pointer;
+  }
+  
+  /* Style items (options): */
+  .select-items {
+    position: absolute;
+    background-color: rgba(0,136,169,1);;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 99;
+  }
+  
+  /* Hide the items when the select box is closed: */
+  .select-hide {
+    display: none;
+  }
+  
+  .select-items div:hover, .same-as-selected {
+    background-color: rgba(0, 0, 0, 0.1);
+  }

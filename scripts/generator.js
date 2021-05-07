@@ -59,7 +59,7 @@ class Generator {
     }
 
 
-    createSchedule = (gameweeks) => {
+    /*createSchedule = (gameweeks) => {
         let schedule = new Schedule(this.teams, gameweeks);
 
         for(let gameweek = 0; gameweek < gameweeks; gameweek++) {
@@ -89,7 +89,7 @@ class Generator {
         };
 
         return schedule;
-    }
+    }*/
 
     createGamePool = () => {
 
@@ -237,7 +237,7 @@ class Generator {
         if (i === (n/2)) {
             if (this.uniqueGameweeksArray.length > 0) {
 
-                for (let q = 0; q < 120; q++) {
+                for (let q = 0; q < this.uniqueGameweeksArray.length; q++) {
 
                     if (!this.compareGameweeks(this.uniqueGameweeksArray[q], map)) {
 

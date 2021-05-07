@@ -99,7 +99,7 @@ const displaySchedule = (schedule) => {
         const gameweekHeader = document.createElement("h2");
         gameweekHeader.textContent += "Gameweek" + " " + (i + 1);
         gameweekHeader.classList.add("gameweek");
-        gameweekHeader.classList.add("flexContainer");
+        gameweekHeader.classList.add("gameweekContainer");
 
         // add this container to the DOM
         gridWrapper.appendChild(gameweekHeader);
