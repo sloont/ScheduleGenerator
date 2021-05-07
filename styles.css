@@ -319,6 +319,9 @@ li {
     position: relative;
     font-family: "Noto Sans JP", sans-serif;
     margin-top: 1em;
+    margin-left: 3em;
+    width: 14em;
+    height: 2em;
   }
   
   .custom-select select {
