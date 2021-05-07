@@ -133,8 +133,8 @@ class Generator {
 
             for (let x = 0; x < (n/2); x++) {
 
-                if (gameweek[""+i].home === comparison[""+x].home &&
-                    gameweek[""+i].away === comparison[""+x].away) {
+                if (gameweek[i].home === comparison[x].home &&
+                    gameweek[i].away === comparison[x].away) {
                     
                     count++;
                     
@@ -202,6 +202,14 @@ class Generator {
         
         const x = this.pickRandomFirstGame();
         workingSchedule.push(this.uniqueGameweeksArray[x]);
+
+        if (n === 2) {
+            workingSchedule = this.uniqueGameweeksArray;
+            this.randomizeArray(workingSchedule);
+            this.putTeamObjectsInSchedule(workingSchedule);
+            this.displaySchedule(workingSchedule);
+            return workingSchedule;
+        }
     
         while (workingSchedule.length < (n-1 * 2)) {
     

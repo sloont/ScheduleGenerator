@@ -5,6 +5,24 @@ let teamList = [];
 let cloneCount = 0;
 let childCount = 0;
 
+const randomizeArray = (array) => {
+    let currentIndex = array.length;
+        let temp, randomIndex;
+
+        while ( 0 !== currentIndex) {
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
+
+            temp = array[currentIndex];
+            array[currentIndex] = array[randomIndex];
+            array[randomIndex] = temp;
+        }
+            
+        return array;
+}
+
+const gridWrapper = document.getElementById("gridWrapper");
+
 const insertVersus = () => {
     const flexContainer = document.createElement("div");
     flexContainer.classList.add("flexContainer");
@@ -13,7 +31,6 @@ const insertVersus = () => {
     versus.classList.add("versus");
     versus.textContent += "VS.";
 
-    const gridWrapper = document.getElementById("gridWrapper");
     gridWrapper.appendChild(flexContainer);
     flexContainer.appendChild(versus);
 }
@@ -33,13 +50,14 @@ const clonePath = (nodeObject) => {
     parent.appendChild(clonedPath);
 }
 
-const postTeam = (teamObject) => {
-    const gridWrapper = document.getElementById("gridWrapper");
+
+const postTeam = (teamObject, destination) => {
+    
     // make additions to the DOM for the home team
     // create the flexContainer div and add the class flexContainer
     const flexContainer = document.createElement("div");
     flexContainer.classList.add("flexContainer");
-    gridWrapper.appendChild(flexContainer);
+    destination.appendChild(flexContainer);
 
     // create the testContainer div and add the class testContainer
     const testContainer = document.createElement("div");
@@ -75,15 +93,13 @@ const postTeam = (teamObject) => {
 }
 
 const displaySchedule = (schedule) => {
-    // grab the gridWrapper
-    const gridWrapper = document.getElementById("gridWrapper");
 
     for (let i = 0; i < schedule.length; i++) {
         // create a flex container for the gameweek
         const gameweekHeader = document.createElement("h2");
         gameweekHeader.textContent += "Gameweek" + " " + (i + 1);
         gameweekHeader.classList.add("gameweek");
-        gameweekHeader.classList.add("flexContainer");
+        gameweekHeader.classList.add("gameweekContainer");
 
         // add this container to the DOM
         gridWrapper.appendChild(gameweekHeader);
@@ -95,32 +111,80 @@ const displaySchedule = (schedule) => {
             const away = gameweekArray[j].away;
             // grab the team objects for home and away within the object for a game
             
-            postTeam(home);
+            postTeam(home, gridWrapper);
             countChildren();
-            postTeam(away);
+            postTeam(away, gridWrapper);
             countChildren();
         }
     }
 }
 
+const teamPlates = document.getElementById("teamPlates");
 
 const saveTeam = () => {
+
     const teamName = document.getElementsByName("teamName")[0].value;
     const teamColor = document.getElementsByName("teamColor")[0].value;
     const teamLogo = document.getElementsByName("teamLogo")[0].value;
 
     const team = new Team(numberOfTeams++, teamName, teamColor, teamLogo);
     teamList.push(team);
+    postTeam(team, teamPlates);
 }
 
+const makeRandomTeams = () => {
+
+    teamList = [];
+    numberOfTeams = 0;
+
+    let colors = ["blue", "red", "green", "purple", "yellow", "orange", "lightblue", "white"];
+    let logos = ["benderSVG", "frySVG", "leelaSVG", "nibblerSVG", "professorSVG", "zoidbergSVG", "jakeTheDogSVG", "stormtrooperSVG"];
+    let teamNames = ["Cardinals", "Falcons", "Ravens", "Bills", "Panthers", "Bears", "Bengals", "Browns", "Cowboys", "Broncos", "Lions", "Packers", "Texans", "Colts", "Jaguars", "Chiefs", "Chargers", "Rams", "Dolphins", "Vikings", "Patriots", "Saints", "Giants", "Jets", "Raiders", "Eagles", "Steelers", "49ers", "Seahawks", "Buccaneers", "Titans"];
+
+    randomizeArray(colors);
+    randomizeArray(logos);
+    randomizeArray(teamNames);
+
+    const numberTeams = document.getElementsByName("numberOfTeams")[0].value;
+
+    for (let i = 0; i < numberTeams; i++) {
+
+        const team = new Team(i, teamNames[i], colors[i], logos[i]);
+        teamList.push(team);
+        postTeam(team, teamPlates);
+        numberOfTeams++;
+
+    }
+
+
+
+}
+
+const removeTeamsFromDOM = (parentNode) => {
+    while (parentNode.firstChild) {
+
+        parentNode.removeChild(parentNode.lastChild);
+    }
+}
+
+
 const saveTeamBtn = document.getElementById("saveTeamBtn");
+
 saveTeamBtn.addEventListener("click", () => {
-    saveTeam();
-    console.log(teamList);
+    if (teamList.length < 9) {
+        console.log(teamList);
+        saveTeam();
+    }
+    
 });
 
 const scheduleBtn = document.getElementById("scheduleBtn");
 scheduleBtn.addEventListener("click", () => {
+    if (teamList.length % 2 === 1) {
+        const bye = new Team(numberOfTeams++, "BYE", "bye", "bye");
+        teamList.push(bye);
+    }
+    saveTeamBtn.disabled = true;
     const generator = new Generator(teamList);
     
     console.log(generator);
@@ -129,11 +193,8 @@ scheduleBtn.addEventListener("click", () => {
     generator.createGamePool();
     //generator.printGamePool();
     //generator.displayGamePool();
-    const wrapper = document.getElementById("gridWrapper");
-    while (wrapper.firstChild) {
-
-        wrapper.removeChild(wrapper.lastChild);
-    }
+    removeTeamsFromDOM(gridWrapper);
+    
     
     
     
@@ -143,8 +204,10 @@ scheduleBtn.addEventListener("click", () => {
     
 });
 
-/*const randomizeBtn = document.getElementById("randomizeBtn");
+const randomizeBtn = document.getElementById("randomizeBtn");
 randomizeBtn.addEventListener("click", () => {
+    removeTeamsFromDOM(gridWrapper);
+    removeTeamsFromDOM(teamPlates);
+    makeRandomTeams();
 
 })
-*/ 

@@ -45,4 +45,15 @@ class Schedule {
     }
   }
 
+  generatePossibleGames = (mostRecentGame, gameArray) => {
+    const homeNumber = mostRecentGame.home.teamNumber;
+    const awayNumber = mostRecentGame.away.teamNumber;
+    let gamesArray = [];
+
+    console.log(homeNumber);
+    console.log(awayNumber);
+
+
+  }
+
 }
