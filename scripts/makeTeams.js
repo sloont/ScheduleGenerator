@@ -206,7 +206,7 @@ scheduleBtn.addEventListener("click", () => {
 
 const randomizeBtn = document.getElementById("randomizeBtn");
 randomizeBtn.addEventListener("click", () => {
-    
+    removeTeamsFromDOM(gridWrapper);
     removeTeamsFromDOM(teamPlates);
     makeRandomTeams();
 
