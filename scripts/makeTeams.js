@@ -134,8 +134,7 @@ const saveTeam = () => {
 
 const makeRandomTeams = () => {
 
-    teamList = [];
-    numberOfTeams = 0;
+    resetGlobals();
 
     let colors = ["blue", "red", "green", "purple", "yellow", "orange", "lightblue", "white"];
     let logos = ["benderSVG", "frySVG", "leelaSVG", "nibblerSVG", "professorSVG", "zoidbergSVG", "jakeTheDogSVG", "stormtrooperSVG"];
@@ -167,6 +166,16 @@ const removeTeamsFromDOM = (parentNode) => {
     }
 }
 
+const resetGlobals = () => {
+
+    numberOfTeams = 0;
+    teamList = [];
+    cloneCount = 0;
+    childCount = 0;
+}
+
+
+
 
 const saveTeamBtn = document.getElementById("saveTeamBtn");
 
@@ -178,29 +187,56 @@ saveTeamBtn.addEventListener("click", () => {
     
 });
 
+const customSelects = document.getElementsByClassName("custom-select");
+
+const defaultSelects = document.getElementsByTagName("select");
+
+const teamInformation = document.getElementById("teamInformation");
+
+//hide #teamInformation when on mobile
+const clearDOMForMobile = () => {
+
+    
+    for( let select of customSelects) {
+        select.classList.add("hide-on-mobile");
+    }
+    
+    teamPlates.classList.add("hide-on-mobile");
+    
+    teamInformation.classList.add("reduceHeight");
+}
+
+//add #teamInformation back when on mobile
+const resetDOMForMobile = () => {
+
+    teamPlates.classList.remove("hide-on-mobile");
+    teamInformation.classList.remove("reduceHeight");
+}
+
 const scheduleBtn = document.getElementById("scheduleBtn");
 scheduleBtn.addEventListener("click", () => {
-    if (teamList.length % 2 === 1) {
-        const bye = new Team(numberOfTeams++, "BYE", "bye", "bye");
-        teamList.push(bye);
+    if (teamList.length > 0) {
+        if (teamList.length % 2 === 1) {
+            const bye = new Team(numberOfTeams++, "BYE", "bye", "bye");
+            teamList.push(bye);
+        }
+        saveTeamBtn.disabled = true;
+        const generator = new Generator(teamList);
+        
+        console.log(generator);
+        //console.log(generator.gamePool);
+
+        generator.createGamePool();
+        //generator.printGamePool();
+        //generator.displayGamePool();
+        removeTeamsFromDOM(gridWrapper);
+        
+        clearDOMForMobile();
+
+        generator.generateUniqueGameweeks();
+
+        generator.makeSchedule();
     }
-    saveTeamBtn.disabled = true;
-    const generator = new Generator(teamList);
-    
-    console.log(generator);
-    //console.log(generator.gamePool);
-
-    generator.createGamePool();
-    //generator.printGamePool();
-    //generator.displayGamePool();
-    removeTeamsFromDOM(gridWrapper);
-    
-    
-    
-    
-    generator.generateUniqueGameweeks();
-
-    generator.makeSchedule();
     
 });
 
@@ -208,6 +244,45 @@ const randomizeBtn = document.getElementById("randomizeBtn");
 randomizeBtn.addEventListener("click", () => {
     removeTeamsFromDOM(gridWrapper);
     removeTeamsFromDOM(teamPlates);
+    resetDOMForMobile();
     makeRandomTeams();
 
 })
+
+const clearBtn = document.getElementById("clearBtn");
+clearBtn.addEventListener("click", () => {
+
+    removeTeamsFromDOM(gridWrapper);
+    removeTeamsFromDOM(teamPlates);
+    resetDOMForMobile();
+    for( let select of customSelects) {
+        select.classList.remove("hide-on-mobile");
+    }
+    
+
+    for (let i = 0; i <customSelects.length; i++) {
+
+        let sameAsSelected = customSelects[i].getElementsByClassName("same-as-selected")[0];
+        let selectSelected = customSelects[i].getElementsByClassName("select-selected")[0];
+        let defaultSelectMatch = customSelects[i].getElementsByTagName("select")[0];
+
+        
+        selectSelected.innerHTML = defaultSelectMatch.options[0].innerHTML;
+        defaultSelectMatch.options[0].click();
+        
+        try {
+            sameAsSelected.removeAttribute("class");
+        }
+        catch (TypeError) {
+
+        }
+
+        resetGlobals();
+    }
+
+    
+})
+
+
+
+

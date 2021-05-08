@@ -3,6 +3,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
   <title>Sports League</title>
   <meta name="description" content="Schedule Generator">
@@ -14,6 +15,46 @@
 
 <body>
   <aside id="teamInformation">
+    <button id="saveTeamBtn" style="display: none">SAVE TEAM</button>
+      <!--<button id="randomizeBtn">RANDOMIZE</button>
+      <button id="scheduleBtn">RANDOM SCHEDULE</button>-->
+      <nav id= "button-nav">
+        <ul class="buttons">
+        <li><a href="#" class="button" id="randomizeBtn">
+            <div class="bottom"></div>
+            <div class="top">
+                <div class="label">RANDOMIZE</div>
+                <div class="button-border button-border-top"></div>
+                <div class="button-border button-border-right"></div>
+                <div class="button-border button-border-bottom"></div>
+                <div class="button-border button-border-left"></div>
+            </div>
+        </a></li>
+    
+        <li><a href="#" class="button" id="scheduleBtn">
+            <div class="bottom"></div>
+            <div class="top">
+                <div class="label">SCHEDULE</div>
+                <div class="button-border button-border-top"></div>
+                <div class="button-border button-border-right"></div>
+                <div class="button-border button-border-bottom"></div>
+                <div class="button-border button-border-left"></div>
+            </div>
+        </a></li>
+
+        <li><a href="#" class="button" id="clearBtn">
+          <div class="bottom"></div>
+          <div class="top">
+              <div class="label">CLEAR</div>
+              <div class="button-border button-border-top"></div>
+              <div class="button-border button-border-right"></div>
+              <div class="button-border button-border-bottom"></div>
+              <div class="button-border button-border-left"></div>
+          </div>
+        </a></li>
+
+        </ul>
+    </nav>
     <div class="form">
       <div style="display: none">
       <p class="formLabel">Team Name: <br><br><input type="text" name="teamName" value="Fifteen Chars!!"></p>
@@ -58,37 +99,8 @@
     </div>
 
     </div>
-    
-      <button id="saveTeamBtn" style="display: none">SAVE TEAM</button>
-      <!--<button id="randomizeBtn">RANDOMIZE</button>
-      <button id="scheduleBtn">RANDOM SCHEDULE</button>-->
-      <nav>
-        <ul class="buttons">
-        <li><a href="#" class="button" id="randomizeBtn">
-            <div class="bottom"></div>
-            <div class="top">
-                <div class="label">RANDOMIZE</div>
-                <div class="button-border button-border-top"></div>
-                <div class="button-border button-border-right"></div>
-                <div class="button-border button-border-bottom"></div>
-                <div class="button-border button-border-left"></div>
-            </div>
-        </a></li>
-    
-        <li><a href="#" class="button" id="scheduleBtn">
-            <div class="bottom"></div>
-            <div class="top">
-                <div class="label">SCHEDULE</div>
-                <div class="button-border button-border-top"></div>
-                <div class="button-border button-border-right"></div>
-                <div class="button-border button-border-bottom"></div>
-                <div class="button-border button-border-left"></div>
-            </div>
-        </a></li>
-        </ul>
-    </nav>
       
-    <br>
+    
     <div id="teamPlates">
 
     </div>
@@ -115,9 +127,9 @@
   <script src="scripts/team.js"></script>
   <script src="scripts/schedule.js"></script>
   <script src="scripts/noTeamObjects.js"></script>
-  
-  <script src="scripts/makeTeams.js"></script>
   <script src="scripts/selectStyling.js"></script>
+  <script src="scripts/makeTeams.js"></script>
+  
   
 
 </body>
