@@ -10,6 +10,11 @@ html {
     font-family: "Noto Sans JP", sans-serif;
     text-transform: uppercase;
 }
+
+.hideItem {
+    display: none;
+}
+
 /*containers for the test displays*/
 
 #teamInformation {
@@ -329,6 +334,8 @@ li {
     left: 50%;
     transform: translateX(-50%);
     width: 14em;
+
+    border: 2px solid #edf0f1;
     
     
   }
@@ -373,9 +380,12 @@ li {
     position: absolute;
     background-color: rgba(0,136,169,1);;
     top: 42px;
-    left: 0;
+    left: -2px;
     right: 0;
     z-index: 99;
+    width: 14em;
+
+    border: 2px solid #edf0f1;
   }
   
   /* Hide the items when the select box is closed: */
@@ -388,7 +398,7 @@ li {
   }
 
   /*Media Query for < 950px*/
-  @media only screen and (max-width: 950px) {
+  @media only screen and (max-width: 950px) and (min-width: 600px) {
     html {
     font-size: 16px;
     }
@@ -412,7 +422,7 @@ li {
     }
 
     #gridWrapper {
-        margin:auto;
+        margin: auto;
         margin-top: 8em;
     
         display: grid;

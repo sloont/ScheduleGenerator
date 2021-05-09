@@ -193,15 +193,15 @@ const defaultSelects = document.getElementsByTagName("select");
 
 const teamInformation = document.getElementById("teamInformation");
 
-//hide #teamInformation when on mobile
+//hide #teamInformation when on mobile HIDE ITEM IS NOW FOR ALL SCREEN SIZES
 const clearDOMForMobile = () => {
 
     
     for( let select of customSelects) {
-        select.classList.add("hide-on-mobile");
+        select.classList.add("hideItem");
     }
     
-    teamPlates.classList.add("hide-on-mobile");
+    teamPlates.classList.add("hideItem");
     
     teamInformation.classList.add("reduceHeight");
 }
@@ -209,7 +209,7 @@ const clearDOMForMobile = () => {
 //add #teamInformation back when on mobile
 const resetDOMForMobile = () => {
 
-    teamPlates.classList.remove("hide-on-mobile");
+    teamPlates.classList.remove("hideItem");
     teamInformation.classList.remove("reduceHeight");
 }
 
@@ -246,7 +246,6 @@ randomizeBtn.addEventListener("click", () => {
     removeTeamsFromDOM(teamPlates);
     resetDOMForMobile();
     makeRandomTeams();
-
 })
 
 const clearBtn = document.getElementById("clearBtn");
@@ -256,7 +255,7 @@ clearBtn.addEventListener("click", () => {
     removeTeamsFromDOM(teamPlates);
     resetDOMForMobile();
     for( let select of customSelects) {
-        select.classList.remove("hide-on-mobile");
+        select.classList.remove("hideItem");
     }
     
 
